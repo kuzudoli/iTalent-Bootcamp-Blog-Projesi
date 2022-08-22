@@ -1,0 +1,36 @@
+﻿@model CreatePostViewModel
+
+<h3 class="pb-3">Gönderi Oluştur</h3>
+
+<div class="row">
+    <div class="col align-self-center">
+        <form class="w-50" method="post" asp-route="AddPost" enctype="multipart/form-data">
+            <div class="form-group">
+                <span>Kategori: </span>
+                <select id="category" class="form-control-user" asp-for="CategoryId" asp-items="@ViewBag.categoryList">
+                </select>
+            </div>
+            <div class="form-group">
+                <span>Görsel: </span>
+                <input type="file" asp-for="ImageFile" placeholder="image" style="width:250px"/>
+                <span class="text-danger" asp-validation-for="ImageFile"></span>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control form-control-user" asp-for="Title" id="title" placeholder="Başlık">
+                <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control form-control-user" asp-for="Content" placeholder="İçerik"></textarea>
+                <span class="text-danger" asp-validation-for="Content"></span>
+            </div>
+            <input type="submit" class="btn btn-primary btn-user btn-block" value="Kaydet">
+            <hr>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    }

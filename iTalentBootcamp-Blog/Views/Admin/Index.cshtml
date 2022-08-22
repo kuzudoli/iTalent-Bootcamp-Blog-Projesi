@@ -1,0 +1,109 @@
+﻿
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Hoşgeldiniz</h1>
+        <a asp-controller="Home" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Blog'a Dön
+        </a>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-lg font-weight-bold text-info text-uppercase mb-1">
+                                Gönderi Sayisi
+                            </div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-800">@ViewBag.postCount</div>
+                        </div>
+                        <div class="col-auto text-lg">
+                            <i class="fas fa-file-alt fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">
+                                Kategori Sayisi
+                            </div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-800">@ViewBag.categoryCount</div>
+                        </div>
+                        <div class="col-auto text-lg">
+                            <i class="fas fa-list-alt fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-9 col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">GÖNDERİLER</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Kategori</th>
+                                    <th>Başlık</th>
+                                    <th>Tarih</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Kategori</th>
+                                    <th>Başlık</th>
+                                    <th>Tarih</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var post in ViewBag.postList)
+                                {
+                                    <tr>
+                                        <td>@post.Id</td>
+                                        <td>@post.Category.Name</td>
+                                        <td>@post.Title</td>
+                                        <td>@post.CreatedAt.ToShortDateString()</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories-->
+        <div class="col-xl-3 col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">KATEGORİLER</h6>
+                </div>
+                <div class="card-body">
+                    @foreach (var category in ViewBag.categoryList)
+                    {
+                        <div class="text-md font-weight-bold text-uppercase">
+                            @category.Name
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

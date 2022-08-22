@@ -1,0 +1,12 @@
+﻿<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 ftco-animate">
+                <h2 class="mb-3 font-weight-bold">@ViewBag.post.Title</h2>
+                <span class="category mb-3 inline-block">@ViewBag.post.Category.Name</span>
+                <span class="category mb-3 inline-block float-right">@ViewBag.post.CreatedAt</span>
+                <p><img src="~/pictures/@ViewBag.post.ImageUrl" alt="" class="img-fluid"></p>
+                <p>@ViewBag.post.Content</p>
+            </div>
+        </div>
+</section>

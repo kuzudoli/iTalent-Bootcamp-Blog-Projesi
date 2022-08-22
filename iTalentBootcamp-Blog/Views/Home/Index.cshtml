@@ -1,0 +1,56 @@
+﻿
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 heading-section text-center ftco-animate">
+                <h2 class="mb-4">Gönderiler</h2>
+                <p><i>“Düzenim bozulur, hayatım alt üst olur diye endişe etme. Nereden biliyorsun hayatın altının üstünden daha iyi olmayacağını?” Şems-i Tebrizi</i></p>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var post in ViewBag.postList)
+            {
+                <div class="col-md-4">
+                    <div class="blog-entry ftco-animate">
+                        <div class="img img-2">
+                            <img width="100%" src="~/pictures/@post.ImageUrl">
+                        </div>
+                        <div class="text text-2 pt-2 mt-3">
+                            <span class="category mb-3 d-block">@post.Category.Name</span>
+                            <h3 class="mb-4">@post.Title.Substring(0,20)</h3>
+                            <p class="mb-4">@post.Content.Substring(0,75)</p>
+                            <div class="meta-wrap align-items-center">
+                                <div class="half">
+                                    <p>
+                                        <a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id" class="btn py-2">
+                                            Devam Et <span class="ion-ios-arrow-forward"></span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                <div class="block-27">
+                    <ul>
+                        @for (var pageNumber = 1; pageNumber <= ViewBag.pageCount; pageNumber++)
+                        {
+                            @if (pageNumber == ViewBag.currentIndex)
+                            {
+                                <li class="active"><a asp-controller="Home" asp-action="Index" asp-route-page="@pageNumber">@pageNumber</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-controller="Home" asp-action="Index" asp-route-page="@pageNumber">@pageNumber</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

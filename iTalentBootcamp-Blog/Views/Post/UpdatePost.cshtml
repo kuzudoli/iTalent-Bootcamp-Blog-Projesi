@@ -1,0 +1,40 @@
+﻿@model UpdatePostViewModel
+
+<h3 class="pb-3">Gönderi Güncelle</h3>
+
+<div class="row">
+    <div class="col" style="border-right:1px solid #ebebeb;">
+        <form method="post" asp-route="UpdatePost" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id"/>
+            <div class="form-group">
+                <span>Kategori: </span>
+                <select id="category" class="form-control-user" asp-for="CategoryId" asp-items="@ViewBag.categoryList">
+                </select>
+            </div>
+            <div class="form-group">
+                <span>Görsel: </span>
+                <input type="file" name="photo" placeholder="image" style="width:250px" />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control form-control-user" asp-for="Title" id="title" placeholder="Başlık">
+                <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control form-control-user" asp-for="Content" placeholder="İçerik"></textarea>
+                <span class="text-danger" asp-validation-for="Content"></span>
+            </div>
+            <input type="submit" class="btn btn-primary btn-user btn-block" value="Kaydet">
+        </form>
+    </div>
+    <div class="col">
+        <div class="w-100">
+            <img src="/pictures/@Model.ImageUrl" style="width:50%;margin-left:50px;" />
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    }
