@@ -3,7 +3,10 @@
     width: 100% !important;
     object-fit: cover !important;
 }
-
+.imgFit {
+    width: 80px !important;
+    object-fit: cover !important;
+}
 .imgDetailThumb {
     width: 100%;
     height: 500px;

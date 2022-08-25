@@ -46,6 +46,12 @@ namespace iTalentBootcamp_Blog.Data
             return (pagedList, pageCount);
         }
 
+        public List<Post> GetPopularPosts(int count)
+        {
+            var popularPosts = _context.Posts.OrderByDescending(p => p.LikeCount).Take(count).ToList();
+            return popularPosts;
+        }
+
         public void Update(Post post)
         {
             _context.Posts.Update(post);

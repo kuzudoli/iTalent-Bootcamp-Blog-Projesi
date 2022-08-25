@@ -1,66 +1,4 @@
-﻿@*<section class="ftco-section">
-    <div class="container">
-        <div class="row justify-content-center mb-5 pb-2">
-            <div class="col-md-7 heading-section text-center ftco-animate">
-                <h2 class="mb-4">Gönderiler</h2>
-                <p><i>“Düzenim bozulur, hayatım alt üst olur diye endişe etme. Nereden biliyorsun hayatın altının üstünden daha iyi olmayacağını?” Şems-i Tebrizi</i></p>
-            </div>
-        </div>
-        <div class="row">
-            @foreach (var post in ViewBag.postList)
-            {
-                <div class="col-md-4">
-
-                    <div class="blog-entry ftco-animate fadeInUp ftco-animated">
-                        <img class="img img-2 imgThumb" src="~/pictures/@post.ImageUrl">
-                        <div class="text text-2 pt-2 mt-3">
-                            <span class="category mb-3 d-block"><a href="#">@post.Category.Name</a></span>
-                            <h3 class="mb-4"><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id">@post.Title</a></h3>
-                            <p class="mb-4">@post.Content.Substring(0,50)</p>
-                            <div class="author mb-4 d-flex align-items-center">
-                                <div class="info">
-                                    <span>@post.CreatedAtShortString</span>
-                                </div>
-                            </div>
-                            <div class="meta-wrap align-items-center">
-                                <div class="half order-md-last">
-                                    <p class="meta">
-                                        <span><i class="icon-heart"></i>3</span>
-                                        <span><i class="icon-eye"></i>100</span>
-                                        <span><i class="icon-comment"></i>5</span>
-                                    </p>
-                                </div>
-                                <div class="half">
-                                    <p><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id" class="btn py-2">Continue Reading <span class="ion-ios-arrow-forward"></span></a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-        <div class="row mt-5">
-            <div class="col">
-                <div class="block-27">
-                    <ul>
-                        @for (var pageNumber = 1; pageNumber <= ViewBag.pageCount; pageNumber++)
-                        {
-                            @if (pageNumber == ViewBag.currentIndex)
-                            {
-                                <li class="active"><a asp-controller="Home" asp-action="Index" asp-route-page="@pageNumber">@pageNumber</a></li>
-                            }
-                            else
-                            {
-                                <li><a asp-controller="Home" asp-action="Index" asp-route-page="@pageNumber">@pageNumber</a></li>
-                            }
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>*@
-<div class="ftco-section">
+﻿<div class="ftco-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
@@ -71,7 +9,7 @@
                             <div class="blog-entry ftco-animate fadeInUp ftco-animated">
                                 <img class="img img-2 imgThumb" src="~/pictures/@post.ImageUrl">
                                 <div class="text pt-2 mt-3">
-                                    <span class="category mb-1 d-block"><a href="#">@post.Category.Name</a></span>
+                                    <span class="category mb-1 d-block">@post.Category.Name</span>
                                     <h3 class="mb-4"><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id">@post.Title</a></h3>
                                     <p class="mb-4">@post.Content.Substring(0,100)</p>
                                     <div class="author mb-4 d-flex align-items-center">
@@ -82,12 +20,12 @@
                                     <div class="meta-wrap d-md-flex align-items-center">
                                         <div class="half order-md-last text-md-right">
                                             <p class="meta">
-                                                <span><i class="icon-heart"></i>3</span>
+                                                <span><i class="icon-heart"></i>@post.LikeCount</span>
                                                 <span><i class="icon-comment"></i>5</span>
                                             </p>
                                         </div>
                                         <div class="half">
-                                            <p><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id" class="btn btn-primary p-3 px-xl-4 py-xl-3">Continue Reading</a></p>
+                                            <p><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id" class="btn btn-primary p-3 px-xl-4 py-xl-3">Devam Et</a></p>
                                         </div>
                                     </div>
                                 </div>
