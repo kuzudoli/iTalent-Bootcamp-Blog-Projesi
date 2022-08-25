@@ -32,7 +32,7 @@ namespace iTalentBootcamp_Blog.Controllers
         }
 
         [HttpGet]
-        [Route("/Posts",Name ="Posts")]
+        [Route("/Posts", Name = "Posts")]
         public IActionResult GetAll()
         {
             var posts = _postRepository.GetAll();
@@ -50,7 +50,7 @@ namespace iTalentBootcamp_Blog.Controllers
         }
 
         [HttpPost]
-        [Route("/Posts/AddPost",Name ="AddPost")]
+        [Route("/Posts/AddPost", Name = "AddPost")]
         public async Task<IActionResult> CreatePost(CreatePostViewModel request)
         {
             if (!ModelState.IsValid)
@@ -67,7 +67,7 @@ namespace iTalentBootcamp_Blog.Controllers
 
             _postRepository.Add(newPost);
 
-            return RedirectToAction("GetAll","Post");
+            return RedirectToAction("GetAll", "Post");
         }
 
         [HttpGet]
@@ -91,7 +91,7 @@ namespace iTalentBootcamp_Blog.Controllers
         }
 
         [HttpPost]
-        [Route("/Posts/Update",Name ="UpdatePost")]
+        [Route("/Posts/Update", Name = "UpdatePost")]
         public async Task<IActionResult> UpdatePost(UpdatePostViewModel request, IFormFile photo)
         {
             var imageUrl = await _photoService.PhotoUpdate(request.Id, photo);
@@ -113,6 +113,17 @@ namespace iTalentBootcamp_Blog.Controllers
             var postViewModel = _mapper.Map<PostViewModel>(postById);
 
             return View(postViewModel);
+        }
+
+        [HttpGet]
+        [Route("/Posts/Detail/Like/{id}", Name = "LikePost")]
+        public IActionResult LikePost(int id)
+        {
+            var likedPost = _postRepository.GetById(id);
+            likedPost.LikeCount++;
+
+            _postRepository.Update(likedPost);
+            return RedirectToRoute(new { controller = "Home", action = "PostDetails", id = id });
         }
     }
 }

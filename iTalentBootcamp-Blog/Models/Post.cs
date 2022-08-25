@@ -7,8 +7,7 @@
         public string Content { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
-        //Silme işlemi için örnek oluşturulduğunda tekrar tarih ataması yapılıyor
-        //nasıl çözülebilir?
+        public int LikeCount { get; set; }
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }

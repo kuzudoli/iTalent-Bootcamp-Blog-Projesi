@@ -22,12 +22,16 @@ namespace iTalentBootcamp_Blog.Controllers
 
         public IActionResult Index(int page=1)
         {
-            int pageSize = 3;
+            int pageSize = 5;
 
-            ViewBag.postList = _postRepository.GetByPage(page, pageSize).Item1;
+            var postList = _mapper.Map<List<PostViewModel>>(_postRepository.GetByPage(page, pageSize).Item1);
+
+            ViewBag.postList = postList.OrderByDescending(x => x.CreatedAt).ToList();
+
             ViewBag.pageCount = _postRepository.GetByPage(page, pageSize).Item2;
             ViewBag.currentIndex = page;
             ViewBag.currentPageName = "anasayfa";
+
             return View();
         }
 
@@ -45,6 +49,7 @@ namespace iTalentBootcamp_Blog.Controllers
             return View();
         }
 
+        [HttpGet]
         [Route("/Posts/{id}")]
         public IActionResult PostDetails(int id)
         {

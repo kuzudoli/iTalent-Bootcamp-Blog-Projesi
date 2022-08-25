@@ -10,7 +10,7 @@ namespace iTalentBootcamp_Blog.Models.ViewModels
         public string Title { get; set; }
 
         [Required(ErrorMessage = "İçerik alanı boş bırakılamaz!")]
-        [MinLength(75, ErrorMessage = "İçerik alanı minimum 75 karakter olmalıdır!")]
+        [MinLength(100, ErrorMessage = "İçerik alanı minimum 100 karakter olmalıdır!")]
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 

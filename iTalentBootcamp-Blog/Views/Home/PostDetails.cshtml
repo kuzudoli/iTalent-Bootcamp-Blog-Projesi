@@ -5,8 +5,52 @@
                 <h2 class="mb-3 font-weight-bold">@ViewBag.post.Title</h2>
                 <span class="category mb-3 inline-block">@ViewBag.post.Category.Name</span>
                 <span class="category mb-3 inline-block float-right">@ViewBag.post.CreatedAt</span>
-                <p><img src="~/pictures/@ViewBag.post.ImageUrl" alt="" class="img-fluid"></p>
+                <p><img src="~/pictures/@ViewBag.post.ImageUrl" class="img-fluid imgDetailThumb"></p>
                 <p>@ViewBag.post.Content</p>
+
+                <!--like button-->
+                <div class="post-action my-3 float-right d-md-flex align-items-center">
+                    <a asp-route="LikePost" asp-route-id="@ViewBag.post.Id" id="likeButton"><i class="icon-heart" ></i></a>
+                     @ViewBag.post.LikeCount
+                </div>
+
+                <!--comment-list-->
+                <div class="pt-5 mt-5">
+                    <h3 class="mb-5 font-weight-bold">6 Comments</h3>
+                    <ul class="comment-list">
+                        <li class="comment">
+                            <div class="vcard bio">
+                                <img src="/images/person.png">
+                            </div>
+                            <div class="comment-body">
+                                <h3>John Doe</h3>
+                                <div class="meta">October 03, 2018 at 2:21pm</div>
+                                <p>Lorem ipsum dolor sit amet, consectetur?</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- END comment-list -->
+
+                    <div class="comment-form-wrap pt-5">
+                        <h3 class="mb-5">Leave a comment</h3>
+                        <form action="#" class="p-3 p-md-5 bg-light">
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             </div>
+            @await Component.InvokeAsync("Sidebar")
         </div>
+    </div>
 </section>

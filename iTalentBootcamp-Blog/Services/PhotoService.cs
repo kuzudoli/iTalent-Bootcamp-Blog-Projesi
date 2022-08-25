@@ -1,5 +1,7 @@
 ﻿using iTalentBootcamp_Blog.Data;
 using Microsoft.Extensions.FileProviders;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace iTalentBootcamp_Blog.Services
 {

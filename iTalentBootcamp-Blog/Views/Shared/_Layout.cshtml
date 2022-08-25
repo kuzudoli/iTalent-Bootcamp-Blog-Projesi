@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="~/css/flaticon.css">
     <link rel="stylesheet" href="~/css/icomoon.css">
     <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/custom-styles.css">
 </head>
 
 <body>
@@ -37,32 +38,11 @@
             <h1 id="colorlib-logo"><a href="index.html">enescakir<span>.</span></a></h1>
             <nav id="colorlib-main-menu" role="navigation">
                 <ul>
-                    @if (ViewBag.currentPageName == "anasayfa")
-                    {
-                        <li class="colorlib-active"><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
-                    }
 
-                    @if (ViewBag.currentPageName == "hakkimda")
-                    {
-                        <li class="colorlib-active"><a asp-controller="Home" asp-action="About">Hakkımda</a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-controller="Home" asp-action="About">Hakkımda</a></li>
-                    }
+                    <li class="@(ViewBag.currentPageName == "anasayfa" ? "colorlib-active" : "")"><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                    <li class="@(ViewBag.currentPageName == "hakkimda" ? "colorlib-active" : "")"><a asp-controller="Home" asp-action="About">Hakkımda</a></li>
+                    <li class="@(ViewBag.currentPageName == "iletisim" ? "colorlib-active" : "")"><a asp-controller="Home" asp-action="Contact">İletişim</a></li>
 
-                    @if (ViewBag.currentPageName == "iletisim")
-                    {
-                        <li class="colorlib-active"><a asp-controller="Home" asp-action="Contact">İletişim</a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-controller="Home" asp-action="Contact">İletişim</a></li>
-                    }
                 </ul>
             </nav>
 
@@ -73,7 +53,10 @@
         <div id="colorlib-main">
             @RenderBody()
 
-        </div><!-- END COLORLIB-MAIN -->
+            @await Component.InvokeAsync("Footer")
+        </div>
+
+        <!-- END COLORLIB-MAIN -->
     </div><!-- END COLORLIB-PAGE -->
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen">
