@@ -11,6 +11,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 

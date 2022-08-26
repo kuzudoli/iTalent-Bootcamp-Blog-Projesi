@@ -20,5 +20,7 @@
         }
         public DateTime CreatedAt { get; set; }
         public CategoryViewModel Category { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

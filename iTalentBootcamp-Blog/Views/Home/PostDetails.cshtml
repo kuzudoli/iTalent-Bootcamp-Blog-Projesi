@@ -1,4 +1,6 @@
-﻿<section class="ftco-section">
+﻿@model CreateCommentViewModel
+
+<section class="ftco-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 ftco-animate">
@@ -10,40 +12,44 @@
 
                 <!--like button-->
                 <div class="post-action my-3 float-right d-md-flex align-items-center">
-                    <a asp-route="LikePost" asp-route-id="@ViewBag.post.Id" id="likeButton"><i class="icon-heart" ></i></a>
-                     @ViewBag.post.LikeCount
+                    <a asp-route="LikePost" asp-route-id="@ViewBag.post.Id" id="likeButton"><i class="icon-heart"></i></a>
+                    @ViewBag.post.LikeCount
                 </div>
 
                 <!--comment-list-->
                 <div class="pt-5 mt-5">
                     <h3 class="mb-5 font-weight-bold">6 Comments</h3>
                     <ul class="comment-list">
-                        <li class="comment">
-                            <div class="vcard bio">
-                                <img src="/images/person.png">
-                            </div>
-                            <div class="comment-body">
-                                <h3>John Doe</h3>
-                                <div class="meta">October 03, 2018 at 2:21pm</div>
-                                <p>Lorem ipsum dolor sit amet, consectetur?</p>
-                            </div>
-                        </li>
+                        @foreach (var comment in ViewBag.post.Comments)
+                        {
+                            <li class="comment">
+                                <div class="vcard bio">
+                                    <img src="/images/person.png">
+                                </div>
+                                <div class="comment-body">
+                                    <h3>@comment.AuthorName</h3>
+                                    <div class="meta">@comment.CreatedAt</div>
+                                    <p>@comment.Text</p>
+                                </div>
+                            </li>
+                        }
                     </ul>
                     <!-- END comment-list -->
 
                     <div class="comment-form-wrap pt-5">
                         <h3 class="mb-5">Leave a comment</h3>
-                        <form action="#" class="p-3 p-md-5 bg-light">
+                        <form method="post" asp-controller="Comment" asp-action="AddComment" class="p-3 p-md-5 bg-light">
                             <div class="form-group">
                                 <label for="name">Name *</label>
-                                <input type="text" class="form-control" id="name">
+                                <input type="text" class="form-control" asp-for="AuthorName" id="name">
                             </div>
                             <div class="form-group">
                                 <label for="message">Message</label>
-                                <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+                                <textarea asp-for="Text" id="message" cols="30" rows="10" class="form-control"></textarea>
                             </div>
+                            <input type="hidden" asp-for="PostId" value="@ViewBag.post.Id" />
                             <div class="form-group">
-                                <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
+                                <input type="submit" value="Gönder" class="btn py-3 px-4 btn-primary">
                             </div>
 
                         </form>

@@ -20,6 +20,7 @@ namespace iTalentBootcamp_Blog.Controllers
             _mapper = mapper;
         }
 
+        [Route("/",Name ="Index")]
         public IActionResult Index(int page=1)
         {
             int pageSize = 5;

@@ -15,6 +15,8 @@ namespace iTalentBootcamp_Blog.Mappers
             CreateMap<CategoryViewModel, Category>().ReverseMap();
             CreateMap<CreateCategoryViewModel, Category>().ReverseMap();
             CreateMap<UpdateCategoryViewModel, Category>().ReverseMap();
+
+            CreateMap<CreateCommentViewModel, Comment>().ReverseMap();
         }
     }
 }

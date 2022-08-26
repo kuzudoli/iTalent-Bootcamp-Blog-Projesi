@@ -33,7 +33,7 @@ namespace iTalentBootcamp_Blog.Data
 
         public Post GetById(int id)
         {
-            var post = _context.Posts.AsNoTracking().Include(p=>p.Category).First(p => p.Id == id);
+            var post = _context.Posts.AsNoTracking().Include(p=>p.Category).Include(p=>p.Comments).First(p => p.Id == id);
             return post;
         }
 

@@ -26,7 +26,7 @@
             <div class="block-21 mb-4 d-flex">
                 <img class="blog-img mr-4 imgFit" src="/pictures/@post.ImageUrl">
                 <div class="text">
-                    <h3 class="heading"><a href="#">@post.Title</a></h3>
+                    <h3 class="heading"><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id">@post.Title</a></h3>
                     <div class="meta">
                         <div><span class="icon-calendar"></span> @post.CreatedAtShortString</div>
                         <div><span class="icon-heart"></span> @post.LikeCount</div>
