@@ -13,6 +13,7 @@ namespace iTalentBootcamp_Blog.Controllers
     {
         private readonly IPostRepository _postRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ICommentRepository _commentRepository;
         private readonly IMapper _mapper;
         private readonly IFileProvider _fileProvider;
         private readonly IPhotoService _photoService;
@@ -22,13 +23,15 @@ namespace iTalentBootcamp_Blog.Controllers
             ICategoryRepository categoryRepository,
             IMapper mapper,
             IFileProvider fileProvider,
-            IPhotoService photoService)
+            IPhotoService photoService,
+            ICommentRepository commentRepository)
         {
             _postRepository = postRepository;
             _categoryRepository = categoryRepository;
             _mapper = mapper;
             _fileProvider = fileProvider;
             _photoService = photoService;
+            _commentRepository = commentRepository;
         }
 
         [HttpGet]
@@ -45,6 +48,10 @@ namespace iTalentBootcamp_Blog.Controllers
         public IActionResult CreatePost()
         {
             var categoryList = _categoryRepository.GetAll();
+            if (!categoryList.Any())
+            {
+                return View(new Exception("Önce bir kategori oluşturmanız gerekmektedir!"));
+            }
             ViewBag.categoryList = new SelectList(categoryList, "Id", "Name");
             return View();
         }
@@ -86,7 +93,6 @@ namespace iTalentBootcamp_Blog.Controllers
             ViewBag.categoryList = new SelectList(categoryList, "Id", "Name");
 
             UpdatePostViewModel postToUpdate = _mapper.Map<UpdatePostViewModel>(_postRepository.GetById(id));
-
             return View(postToUpdate);
         }
 

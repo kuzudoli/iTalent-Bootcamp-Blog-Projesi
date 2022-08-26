@@ -8,5 +8,6 @@ namespace iTalentBootcamp_Blog.Data
         void Update(Comment comment);
         void Delete(int id);
         List<Comment> GetAll();
+        Comment GetById(int id);
     }
 }

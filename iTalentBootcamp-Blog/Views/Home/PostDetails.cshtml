@@ -38,13 +38,13 @@
 
                     <div class="comment-form-wrap pt-5">
                         <h3 class="mb-5">Leave a comment</h3>
-                        <form method="post" asp-controller="Comment" asp-action="AddComment" class="p-3 p-md-5 bg-light">
+                        <form method="post" asp-controller="Comment" asp-action="Add" class="p-3 p-md-5 bg-light">
                             <div class="form-group">
                                 <label for="name">Name *</label>
                                 <input type="text" class="form-control" asp-for="AuthorName" id="name">
                             </div>
                             <div class="form-group">
-                                <label for="message">Message</label>
+                                <label for="message">Message *</label>
                                 <textarea asp-for="Text" id="message" cols="30" rows="10" class="form-control"></textarea>
                             </div>
                             <input type="hidden" asp-for="PostId" value="@ViewBag.post.Id" />

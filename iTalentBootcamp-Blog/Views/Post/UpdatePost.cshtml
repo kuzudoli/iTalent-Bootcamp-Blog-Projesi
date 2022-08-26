@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col" style="border-right:1px solid #ebebeb;">
         <form method="post" asp-route="UpdatePost" enctype="multipart/form-data">
-            <input type="hidden" asp-for="Id"/>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <span>Kategori: </span>
                 <select id="category" class="form-control-user" asp-for="CategoryId" asp-items="@ViewBag.categoryList">
@@ -20,7 +20,7 @@
                 <span class="text-danger" asp-validation-for="Title"></span>
             </div>
             <div class="form-group">
-                <textarea class="form-control form-control-user" asp-for="Content" placeholder="İçerik"></textarea>
+                <textarea class="form-control form-control-user" asp-for="Content" rows="10" placeholder="İçerik"></textarea>
                 <span class="text-danger" asp-validation-for="Content"></span>
             </div>
             <input type="submit" class="btn btn-primary btn-user btn-block" value="Kaydet">
@@ -32,6 +32,55 @@
         </div>
     </div>
 </div>
+
+<div class="row mt-5">
+    <div class="col">
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th width="5%">ID</th>
+                                <th width="15%">Yorum Sahibi</th>
+                                <th>Yorum</th>
+                                <th width="20%">Oluş. Tarihi</th>
+                                <th width="15%">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th width="5%">ID</th>
+                                <th width="15%">Yorum Sahibi</th>
+                                <th>Yorum</th>
+                                <th width="20%">Oluş. Tarihi</th>
+                                <th width="15%">İşlemler</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (var comment in Model.Comments)
+                            {
+                                <tr>
+                                    <td>@comment.Id</td>
+                                    <td>@comment.AuthorName</td>
+                                    <td>@comment.Text</td>
+                                    <td>@comment.CreatedAt.ToShortDateString()</td>
+                                    <td>
+                                        <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-danger btn-circle btn-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 
 @section Scripts
     {

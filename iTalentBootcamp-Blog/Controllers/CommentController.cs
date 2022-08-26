@@ -18,7 +18,7 @@ namespace iTalentBootcamp_Blog.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddComment(CreateCommentViewModel request)
+        public IActionResult Add(CreateCommentViewModel request)
         {
             if (!ModelState.IsValid)
                 return View(request);
@@ -27,6 +27,16 @@ namespace iTalentBootcamp_Blog.Controllers
             _commentRepository.Add(newComment);
 
             return RedirectToRoute("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var comment = _commentRepository.GetById(id);
+            if (comment != null)
+                _commentRepository.Delete(id);
+
+            return RedirectToRoute("Posts");
         }
     }
 }

@@ -33,6 +33,11 @@ namespace iTalentBootcamp_Blog.Data
             return _context.Comments.ToList();
         }
 
+        public Comment GetById(int id)
+        {
+            return _context.Comments.SingleOrDefault(c => c.Id == id);
+        }
+
         public void Update(Comment comment)
         {
             _context.Comments.Update(comment);

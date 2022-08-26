@@ -18,5 +18,7 @@ namespace iTalentBootcamp_Blog.Models.ViewModels
         public string ImageUrl { get; set; }
 
         public int CategoryId { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }
