@@ -30,7 +30,7 @@ namespace iTalentBootcamp_Blog.Data
 
         public List<Category> GetAll()
         {
-            return _context.Categories.ToList();
+            return _context.Categories.Include(c => c.Posts).ToList();
         }
 
         public Category GetById(int id)

@@ -39,7 +39,7 @@ namespace iTalentBootcamp_Blog.Data
 
         public (List<Post>,int) GetByPage(int page, int pageSize)
         {
-            var postList = _context.Posts.Include(p=>p.Category).ToList();
+            var postList = _context.Posts.Include(p=>p.Category).Include(p=>p.Comments).ToList();
             var pagedList = postList.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             var pageCount = Convert.ToInt32(Math.Ceiling((decimal)postList.Count / pageSize));
 

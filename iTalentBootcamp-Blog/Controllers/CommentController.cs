@@ -26,7 +26,7 @@ namespace iTalentBootcamp_Blog.Controllers
             var newComment = _mapper.Map<Comment>(request);
             _commentRepository.Add(newComment);
 
-            return RedirectToRoute("Index");
+            return RedirectToRoute(new { controller = "Home", action = "PostDetails", id = request.PostId });
         }
 
         [HttpGet]
