@@ -1,4 +1,5 @@
 using iTalentBootcamp_Blog.Data;
+using iTalentBootcamp_Blog.Service.Mapping;
 using iTalentBootcamp_Blog.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -14,6 +15,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
 builder.Services.AddScoped<IPhotoService, PhotoService>();
+
+builder.Services.AddAutoMapper(typeof(MapProfile));
 
 builder.Services.AddDbContext<DataContext>(options =>
 {

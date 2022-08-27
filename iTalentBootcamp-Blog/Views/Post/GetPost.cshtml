@@ -1,0 +1,10 @@
+﻿@model PostViewModel
+@{
+    ViewData["Title"] = "GetPost";
+}
+
+<h1>@Model.Title</h1>
+<h4>@Model.Category.Name</h4>
+<img src="/pictures/@Model.ImageUrl" width="350" height="350" />
+<p>@Model.Content</p>
+

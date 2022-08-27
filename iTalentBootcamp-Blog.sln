@@ -5,13 +5,13 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTalentBootcamp-Blog", "iTalentBootcamp-Blog\iTalentBootcamp-Blog.csproj", "{BF338725-86A6-4E1A-B5E3-15CB46B738CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTalentBootcamp-Blog.API", "iTalentBootcamp-Blog.API\iTalentBootcamp-Blog.API.csproj", "{FD88D7C4-7566-4B7B-B0D9-09348446648F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTalentBootcamp-Blog.API", "iTalentBootcamp-Blog.API\iTalentBootcamp-Blog.API.csproj", "{FD88D7C4-7566-4B7B-B0D9-09348446648F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTalentBootcamp-Blog.Repository", "iTalentBootcamp-Blog.Repository\iTalentBootcamp-Blog.Repository.csproj", "{8AD55458-684E-42F9-970E-0B3D4F77568A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTalentBootcamp-Blog.Repository", "iTalentBootcamp-Blog.Repository\iTalentBootcamp-Blog.Repository.csproj", "{8AD55458-684E-42F9-970E-0B3D4F77568A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTalentBootcamp-Blog.Core", "iTalentBootcamp-Blog.Core\iTalentBootcamp-Blog.Core.csproj", "{662D68EE-F278-4BD7-9F45-25A8D669FC45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTalentBootcamp-Blog.Core", "iTalentBootcamp-Blog.Core\iTalentBootcamp-Blog.Core.csproj", "{852B9379-E62E-49BC-8042-422825C2F568}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTalentBootcamp-Blog.Services", "iTalentBootcamp-Blog.Services\iTalentBootcamp-Blog.Services.csproj", "{C880C77A-CFBB-4969-BDA8-17628C499680}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTalentBootcamp-Blog.Service", "iTalentBootcamp-Blog.Service\iTalentBootcamp-Blog.Service.csproj", "{4178FB16-328E-4933-BC9C-2534140850D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{8AD55458-684E-42F9-970E-0B3D4F77568A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AD55458-684E-42F9-970E-0B3D4F77568A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AD55458-684E-42F9-970E-0B3D4F77568A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{662D68EE-F278-4BD7-9F45-25A8D669FC45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{662D68EE-F278-4BD7-9F45-25A8D669FC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{662D68EE-F278-4BD7-9F45-25A8D669FC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{662D68EE-F278-4BD7-9F45-25A8D669FC45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C880C77A-CFBB-4969-BDA8-17628C499680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C880C77A-CFBB-4969-BDA8-17628C499680}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C880C77A-CFBB-4969-BDA8-17628C499680}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C880C77A-CFBB-4969-BDA8-17628C499680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{852B9379-E62E-49BC-8042-422825C2F568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{852B9379-E62E-49BC-8042-422825C2F568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{852B9379-E62E-49BC-8042-422825C2F568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{852B9379-E62E-49BC-8042-422825C2F568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4178FB16-328E-4933-BC9C-2534140850D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4178FB16-328E-4933-BC9C-2534140850D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4178FB16-328E-4933-BC9C-2534140850D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4178FB16-328E-4933-BC9C-2534140850D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

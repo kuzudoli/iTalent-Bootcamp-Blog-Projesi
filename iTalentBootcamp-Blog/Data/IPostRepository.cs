@@ -10,7 +10,7 @@ namespace iTalentBootcamp_Blog.Data
         void Delete(int id);
         Post GetById(int id);
         List<Post> GetAll();
-        (List<Post>,int) GetByPage(int page, int pageSize);
+        (List<Post>, int) GetByPage(int page, int pageSize);
 
         List<Post> GetPopularPosts(int count);
     }
