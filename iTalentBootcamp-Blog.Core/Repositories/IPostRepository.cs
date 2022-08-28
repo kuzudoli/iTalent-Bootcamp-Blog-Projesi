@@ -11,6 +11,7 @@ namespace iTalentBootcamp_Blog.Core.Repositories
     public interface IPostRepository : IGenericRepository<Post>
     {
         Task<List<Post>> GetPostsWithCategory();
-        Task<List<Post>> GetPostWithCategoryAndComments();
+        Task<Post> GetPostByIdWithCategoryAndComments(int id);
+        Task<List<Post>> GetPopularPosts(int count);
     }
 }

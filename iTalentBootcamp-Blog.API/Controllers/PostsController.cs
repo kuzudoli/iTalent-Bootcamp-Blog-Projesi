@@ -19,6 +19,13 @@ namespace iTalentBootcamp_Blog.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("[action]/{count}")]
+        public async Task<IActionResult> GetPopularPosts(int count)
+        {
+            var popularPosts = await _postService.GetPopularPosts(count);
+            return CreateActionResult(popularPosts);
+        }
+
         [HttpGet("[action]")]
         public async Task<IActionResult> GetPostsWithCategory()
         {
@@ -27,12 +34,12 @@ namespace iTalentBootcamp_Blog.API.Controllers
             return CreateActionResult(posts);
         }
 
-        [HttpGet("[action]")]
-        public async Task<IActionResult> GetPostWithCategoryAndComments()
+        [HttpGet("[action]/{postId}")]
+        public async Task<IActionResult> GetPostByIdWithCategoryAndComments(int postId)
         {
-            var posts = await _postService.GetPostWithCategoryAndComments();
+            var post = await _postService.GetPostByIdWithCategoryAndComments(postId);
             
-            return CreateActionResult(posts);
+            return CreateActionResult(post);
         }
 
         [HttpGet]

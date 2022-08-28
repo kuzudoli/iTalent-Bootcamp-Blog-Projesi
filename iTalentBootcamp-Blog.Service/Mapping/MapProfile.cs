@@ -16,8 +16,9 @@ namespace iTalentBootcamp_Blog.Service.Mapping
             CreateMap<Post, PostDto>().ReverseMap();
             CreateMap<Post, PostCreateDto>().ReverseMap();
             CreateMap<Post, PostUpdateDto>().ReverseMap();
-            CreateMap<Post, PostWithCategoryDto>().ReverseMap();
-            CreateMap<Post, PostWithCategoryAndCommentsDto>().ReverseMap();
+            CreateMap<Post, PostWithCategoryDto>();
+            CreateMap<Post, PostWithCategoryAndCommentsDto>();
+            CreateMap<Post, PostPopularDto>();
 
 
             CreateMap<Category, CategoryDto>().ReverseMap();

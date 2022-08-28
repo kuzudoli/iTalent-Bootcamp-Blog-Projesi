@@ -15,9 +15,15 @@ namespace iTalentBootcamp_Blog.Repository.Repositories
             return await _context.Posts.Include(p => p.Category).ToListAsync();
         }
 
-        public async Task<List<Post>> GetPostWithCategoryAndComments()
+        public async Task<Post> GetPostByIdWithCategoryAndComments(int id)
         {
-            return await _context.Posts.Include(p=>p.Category).Include(p=>p.Comments).ToListAsync();
+            return await _context.Posts.Include(p=>p.Category).Include(p=>p.Comments).FirstAsync(p=>p.Id==id);
+        }
+
+        public async Task<List<Post>> GetPopularPosts(int count)
+        {
+            var popularPosts = await _context.Posts.OrderByDescending(p => p.LikeCount).Take(count).ToListAsync();
+            return popularPosts;
         }
     }
 }

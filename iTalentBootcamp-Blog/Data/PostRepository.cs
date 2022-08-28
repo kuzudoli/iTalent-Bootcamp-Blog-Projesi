@@ -26,11 +26,13 @@ namespace iTalentBootcamp_Blog.Data
             _context.SaveChanges();
         }
 
+        //getpostswithcategory
         public List<Post> GetAll()
         {
             return _context.Posts.Include(p=>p.Category).ToList();
         }
 
+        //getpostbyidwithcategoryandcomment
         public Post GetById(int id)
         {
             var post = _context.Posts.AsNoTracking().Include(p=>p.Category).Include(p=>p.Comments).First(p => p.Id == id);

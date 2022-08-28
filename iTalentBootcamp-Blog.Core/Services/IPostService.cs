@@ -11,7 +11,7 @@ namespace iTalentBootcamp_Blog.Core.Services
     public interface IPostService : IService<Post>
     {
         Task<CustomResponseDto<List<PostWithCategoryDto>>> GetPostsWithCategory();
-
-        Task<CustomResponseDto<List<PostWithCategoryAndCommentsDto>>> GetPostWithCategoryAndComments();
+        Task<CustomResponseDto<PostWithCategoryAndCommentsDto>> GetPostByIdWithCategoryAndComments(int id);
+        Task<CustomResponseDto<List<PostPopularDto>>> GetPopularPosts(int count);
     }
 }
