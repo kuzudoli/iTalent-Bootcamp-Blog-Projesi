@@ -13,5 +13,7 @@ namespace iTalentBootcamp_Blog.Core.Repositories
         Task<List<Post>> GetPostsWithCategory();
         Task<Post> GetPostByIdWithCategoryAndComments(int id);
         Task<List<Post>> GetPopularPosts(int count);
+        Task<Tuple<List<Post>, int>> GetPostsByPage(int page, int pageSize);
+        void LikePost(int id);
     }
 }

@@ -25,5 +25,24 @@ namespace iTalentBootcamp_Blog.Repository.Repositories
             var popularPosts = await _context.Posts.OrderByDescending(p => p.LikeCount).Take(count).ToListAsync();
             return popularPosts;
         }
+
+        public async Task<Tuple<List<Post>, int>> GetPostsByPage(int page, int pageSize)
+        {
+            var posts = await _context.Posts.Include(p => p.Category).Include(p => p.Comments).ToListAsync();
+            var pagedPostList = posts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            var pageCount = Convert.ToInt32(Math.Ceiling((decimal)posts.Count / pageSize));
+            
+            var data = new Tuple<List<Post>, int>(pagedPostList, pageCount);
+            return (data);
+        }
+
+        public void LikePost(int id)
+        {
+            var likedPost =  _context.Posts.Find(id);
+            likedPost.LikeCount++;
+
+            Update(likedPost);
+        }
     }
 }

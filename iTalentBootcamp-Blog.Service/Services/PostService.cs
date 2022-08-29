@@ -18,9 +18,9 @@ namespace iTalentBootcamp_Blog.Service.Services
         private readonly IMapper _mapper;
 
         public PostService(
-            IGenericRepository<Post> repository, 
-            IUnitOfWork unitOfWork, 
-            IPostRepository postRepository, 
+            IGenericRepository<Post> repository,
+            IUnitOfWork unitOfWork,
+            IPostRepository postRepository,
             IMapper mapper) : base(repository, unitOfWork)
         {
             _postRepository = postRepository;
@@ -49,6 +49,21 @@ namespace iTalentBootcamp_Blog.Service.Services
             var postsDto = _mapper.Map<List<PostPopularDto>>(posts);
 
             return CustomResponseDto<List<PostPopularDto>>.Success(200, postsDto);
+        }
+
+        public async Task<CustomResponseDto<PostsWithPageCount>> GetPostsByPage(int page, int pageSize)
+        {
+            var posts = await _postRepository.GetPostsByPage(page, pageSize);
+
+            var postsDto = _mapper.Map<PostsWithPageCount>(posts);
+
+            return CustomResponseDto<PostsWithPageCount>.Success(200, postsDto);
+        }
+
+        public async Task LikePost(int id)
+        {
+            _postRepository.LikePost(id);
+            await _unitOfWork.CommitAsync();//_unitofwork service içerisinden protected olarak verildi
         }
     }
 }

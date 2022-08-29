@@ -19,6 +19,20 @@ namespace iTalentBootcamp_Blog.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpPut("[action]/{postId}")]
+        public async Task<IActionResult> LikePost(int postId)
+        {
+            await _postService.LikePost(postId);
+            return CreateActionResult(CustomResponseDto<PostUpdateDto>.Success(204));
+        }
+
+        [HttpGet("[action]/{page}/{pageSize}")]
+        public async Task<IActionResult> GetPostsByPage(int page,int pageSize)
+        {
+            var posts = await _postService.GetPostsByPage(page, pageSize);
+            return CreateActionResult(posts);
+        }
+
         [HttpGet("[action]/{count}")]
         public async Task<IActionResult> GetPopularPosts(int count)
         {

@@ -13,5 +13,7 @@ namespace iTalentBootcamp_Blog.Core.Services
         Task<CustomResponseDto<List<PostWithCategoryDto>>> GetPostsWithCategory();
         Task<CustomResponseDto<PostWithCategoryAndCommentsDto>> GetPostByIdWithCategoryAndComments(int id);
         Task<CustomResponseDto<List<PostPopularDto>>> GetPopularPosts(int count);
+        Task<CustomResponseDto<PostsWithPageCount>> GetPostsByPage(int page, int pageSize);
+        Task LikePost(int id);
     }
 }
