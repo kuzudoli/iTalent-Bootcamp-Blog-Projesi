@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace iTalentBootcamp_Blog.API.Controllers
 {
 
-    public class CommentController : CustomBaseController
+    public class CommentsController : CustomBaseController
     {
         private readonly ICommentService _commentService;
         private readonly IMapper _mapper;
 
-        public CommentController(ICommentService commentService, IMapper mapper)
+        public CommentsController(ICommentService commentService, IMapper mapper)
         {
             _commentService = commentService;
             _mapper = mapper;
