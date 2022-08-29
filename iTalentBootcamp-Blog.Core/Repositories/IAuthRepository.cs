@@ -10,7 +10,7 @@ namespace iTalentBootcamp_Blog.Core.Repositories
 {
     public interface IAuthRepository : IGenericRepository<User>
     {
-        Task<User> Login(string username, string password);
+        Task<User> GetUserByUsername(string username);
         Task<User> Register(User user);
     }
 }

@@ -10,7 +10,7 @@ namespace iTalentBootcamp_Blog.Core.Services
 {
     public interface IAuthService : IService<User>
     {
-        Task<CustomResponseDto<User>> LoginAsync(string username, string password);
-        Task<CustomResponseDto<UserCreateDto>> RegisterAsync(User user, string password);
+        Task<CustomResponseDto<UserLoginDto>> LoginAsync(string username, string password);
+        Task<CustomResponseDto<UserRegisterDto>> RegisterAsync(User user, string password);
     }
 }
