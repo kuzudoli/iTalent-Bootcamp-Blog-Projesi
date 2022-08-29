@@ -8,6 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using iTalentBootcamp_Blog.Service.Services;
 using iTalentBootcamp_Blog.Service.Mapping;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Newtonsoft.Json;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using iTalentBootcamp_Blog.API.Modules;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,22 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
-
-builder.Services.AddScoped<IPostRepository, PostRepository>();
-builder.Services.AddScoped<IPostService, PostService>();
-
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<ICommentService, CommentService>();
-
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
@@ -47,6 +37,16 @@ builder.Services.AddDbContext<AppDbContext>(x =>
 
 });
 
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+    containerBuilder.RegisterModule(new RepoServiceModule()));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(x =>
+    {
+        x.LoginPath = "/api/Auth/Login";
+    });
 
 var app = builder.Build();
 
@@ -59,6 +59,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
