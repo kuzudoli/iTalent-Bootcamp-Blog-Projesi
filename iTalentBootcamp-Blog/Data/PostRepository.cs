@@ -50,7 +50,7 @@ namespace iTalentBootcamp_Blog.Data
 
         public List<Post> GetPopularPosts(int count)
         {
-            var popularPosts = _context.Posts.OrderByDescending(p => p.LikeCount).Take(count).ToList();
+            var popularPosts = _context.Posts.Include(p=>p.Comments).OrderByDescending(p => p.LikeCount).Take(count).ToList();
             return popularPosts;
         }
 
