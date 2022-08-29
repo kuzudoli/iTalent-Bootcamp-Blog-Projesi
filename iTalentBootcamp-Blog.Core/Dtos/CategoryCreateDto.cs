@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTalentBootcamp_Blog.Core.Dtos
 {
-    public class CreateCategoryDto
+    public class CategoryCreateDto
     {
     }
 }
