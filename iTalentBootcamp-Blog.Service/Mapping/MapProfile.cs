@@ -19,10 +19,16 @@ namespace iTalentBootcamp_Blog.Service.Mapping
             CreateMap<Post, PostWithCategoryDto>();
             CreateMap<Post, PostWithCategoryAndCommentsDto>();
             CreateMap<Post, PostPopularDto>();
+            CreateMap<Tuple<List<Post>, int>, PostsWithPageCount>()
+                .ForMember(p=>p.Posts, t=> t.MapFrom(s=>s.Item1))
+                .ForMember(p=>p.pageCount, t=>t.MapFrom(s=>s.Item2));
 
 
             CreateMap<Category, CategoryDto>().ReverseMap();
+
+
             CreateMap<Comment, CommentDto>().ReverseMap();
+            CreateMap<CommentCreateDto, Comment>();
 
         }
     }
