@@ -7,8 +7,26 @@ using System.Threading.Tasks;
 
 namespace iTalentBootcamp_Blog.Core.Dtos
 {
-    public class PostWithCategoryDto : PostDto
+    public class PostWithCategoryDto
     {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public string ImageUrl { get; set; }
+        public int LikeCount { get; set; }
+        public string CreatedAtShortString
+        {
+            get
+            {
+                return CreatedAt.ToShortDateString();
+            }
+            set
+            {
+                CreatedAtShortString = value;
+            }
+        }
+        public DateTime CreatedAt { get; set; }
+        public int CategoryId { get; set; }
         public CategoryDto Category { get; set; }
     }
 }

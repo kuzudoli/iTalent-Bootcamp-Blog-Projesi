@@ -32,6 +32,10 @@ namespace iTalentBootcamp_Blog.Service.Mapping
             CreateMap<Comment, CommentDto>().ReverseMap();
             CreateMap<CommentCreateDto, Comment>();
 
+
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserCreateDto>().ReverseMap();
+
         }
     }
 }
