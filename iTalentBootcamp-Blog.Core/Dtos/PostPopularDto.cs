@@ -12,17 +12,7 @@ namespace iTalentBootcamp_Blog.Core.Dtos
         public string Title { get; set; }
         public string ImageUrl { get; set; }
         public int LikeCount { get; set; }
-        public string CreatedAtShortString
-        {
-            get
-            {
-                return CreatedAt.ToShortDateString();
-            }
-            set
-            {
-                CreatedAtShortString = value;
-            }
-        }
+        public string CreatedAtShortString => CreatedAt.ToShortDateString();
         public DateTime CreatedAt { get; set; }
     }
 }
