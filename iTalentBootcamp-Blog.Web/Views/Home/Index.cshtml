@@ -1,0 +1,62 @@
+﻿@model PostsWithPageCount
+
+<div class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    @foreach (var post in Model.Posts)
+                    {
+                        <div class="col-md-12">
+                            <div class="blog-entry ftco-animate fadeInUp ftco-animated">
+                                <img class="img img-2 imgThumb" src="~/pictures/@post.ImageUrl">
+                                <div class="text pt-2 mt-3">
+                                    <span class="category mb-1 d-block">@post.Category.Name</span>
+                                    <h3 class="mb-4"><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id">@post.Title</a></h3>
+                                    <p class="mb-4">@post.Content.Substring(0,100)</p>
+                                    <div class="author mb-4 d-flex align-items-center">
+                                        <div class="info">
+                                            <span>@post.CreatedAtShortString</span>
+                                        </div>
+                                    </div>
+                                    <div class="meta-wrap d-md-flex align-items-center">
+                                        <div class="half order-md-last text-md-right">
+                                            <p class="meta">
+                                                <span><i class="icon-heart"></i>@post.LikeCount</span>
+                                                <span><i class="icon-comment"></i>@post.Comments.Count</span>
+                                            </p>
+                                        </div>
+                                        <div class="half">
+                                            <p><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id" class="btn btn-primary p-3 px-xl-4 py-xl-3">Devam Et</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row mt-5">
+                    <div class="col">
+                        <div class="block-27">
+                            <ul>
+                                @if (ViewBag.currentIndex != 1)
+                                {
+                                    <li><a asp-controller="Home" asp-action="Index" asp-route-page=@(ViewBag.currentIndex-1)>&lt;</a></li>
+                                }
+                                @for (var pageNumber = 1; pageNumber <= ViewBag.pageCount; pageNumber++)
+                                {
+                                    <li class="@(pageNumber == ViewBag.currentIndex ? "active" : "" )"><a asp-controller="Home" asp-action="Index" asp-route-page="@pageNumber">@pageNumber</a></li>
+                                }
+                                @if (ViewBag.currentIndex != ViewBag.pageCount)
+                                {
+                                    <li><a asp-controller="Home" asp-action="Index" asp-route-page=@(ViewBag.currentIndex+1)>&gt;</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*@await Component.InvokeAsync("Sidebar")*@
+        </div>
+    </div>
+</div>
