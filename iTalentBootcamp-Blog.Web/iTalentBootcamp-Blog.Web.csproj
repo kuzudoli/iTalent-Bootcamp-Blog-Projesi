@@ -16,4 +16,10 @@
     <ProjectReference Include="..\iTalentBootcamp-Blog.Service\iTalentBootcamp-Blog.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Services\" />
+  </ItemGroup>
+
 </Project>

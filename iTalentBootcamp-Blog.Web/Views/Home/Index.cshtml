@@ -12,8 +12,8 @@
                                 <img class="img img-2 imgThumb" src="~/pictures/@post.ImageUrl">
                                 <div class="text pt-2 mt-3">
                                     <span class="category mb-1 d-block">@post.Category.Name</span>
-                                    <h3 class="mb-4"><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id">@post.Title</a></h3>
-                                    <p class="mb-4">@post.Content.Substring(0,100)</p>
+                                    <h3 class="mb-4"><a asp-route="PostDetails" asp-route-postId="@post.Id">@post.Title</a></h3>
+                                    <p class="mb-4">@post.Content</p>
                                     <div class="author mb-4 d-flex align-items-center">
                                         <div class="info">
                                             <span>@post.CreatedAtShortString</span>
@@ -27,7 +27,7 @@
                                             </p>
                                         </div>
                                         <div class="half">
-                                            <p><a asp-controller="Home" asp-action="PostDetails" asp-route-id="@post.Id" class="btn btn-primary p-3 px-xl-4 py-xl-3">Devam Et</a></p>
+                                            <p><a asp-route="PostDetails" asp-route-postId="@post.Id" class="btn btn-primary p-3 px-xl-4 py-xl-3">Devam Et</a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -43,11 +43,11 @@
                                 {
                                     <li><a asp-controller="Home" asp-action="Index" asp-route-page=@(ViewBag.currentIndex-1)>&lt;</a></li>
                                 }
-                                @for (var pageNumber = 1; pageNumber <= ViewBag.pageCount; pageNumber++)
+                                @for (var pageNumber = 1; pageNumber <= Model.pageCount; pageNumber++)
                                 {
                                     <li class="@(pageNumber == ViewBag.currentIndex ? "active" : "" )"><a asp-controller="Home" asp-action="Index" asp-route-page="@pageNumber">@pageNumber</a></li>
                                 }
-                                @if (ViewBag.currentIndex != ViewBag.pageCount)
+                                @if (ViewBag.currentIndex != Model.pageCount)
                                 {
                                     <li><a asp-controller="Home" asp-action="Index" asp-route-page=@(ViewBag.currentIndex+1)>&gt;</a></li>
                                 }
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            @*@await Component.InvokeAsync("Sidebar")*@
+            @await Component.InvokeAsync("Sidebar")
         </div>
     </div>
 </div>

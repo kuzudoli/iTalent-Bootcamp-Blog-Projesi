@@ -14,5 +14,7 @@ namespace iTalentBootcamp_Blog.Core.Dtos
         public int LikeCount { get; set; }
         public string CreatedAtShortString => CreatedAt.ToShortDateString();
         public DateTime CreatedAt { get; set; }
+
+        public List<CommentDto> Comments{ get; set; }
     }
 }

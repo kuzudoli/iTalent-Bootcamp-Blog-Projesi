@@ -22,7 +22,11 @@ namespace iTalentBootcamp_Blog.Repository.Repositories
 
         public async Task<List<Post>> GetPopularPosts(int count)
         {
-            var popularPosts = await _context.Posts.OrderByDescending(p => p.LikeCount).Take(count).ToListAsync();
+            var popularPosts = await _context.Posts
+                .OrderByDescending(p => p.LikeCount)
+                .Include(p => p.Comments)
+                .Take(count).ToListAsync();
+
             return popularPosts;
         }
 

@@ -9,6 +9,6 @@ namespace iTalentBootcamp_Blog.Core.Repositories
 {
     public interface ICategoryRepository : IGenericRepository<Category>
     {
-
+        Task<List<Category>> GetAllWithPostsAsync();
     }
 }

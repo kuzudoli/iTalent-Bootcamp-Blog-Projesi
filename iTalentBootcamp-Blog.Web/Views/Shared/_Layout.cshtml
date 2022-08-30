@@ -46,13 +46,13 @@
             </nav>
 
             <div class="colorlib-footer">
-                <a asp-route="Dashboard"><b>Admin Paneli</b></a>
+                <a asp-area="Admin" asp-route="Dashboard"><b>Admin Paneli</b></a>
             </div>
         </aside> <!-- END COLORLIB-ASIDE -->
         <div id="colorlib-main">
             @RenderBody()
 
-            @*@await Component.InvokeAsync("Footer")*@
+            @await Component.InvokeAsync("Footer")
         </div>
 
         <!-- END COLORLIB-MAIN -->

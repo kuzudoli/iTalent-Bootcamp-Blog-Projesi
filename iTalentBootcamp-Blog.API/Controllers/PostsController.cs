@@ -87,7 +87,10 @@ namespace iTalentBootcamp_Blog.API.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(PostUpdateDto request)
         {
-            await _postService.UpdateAsync(_mapper.Map<Post>(request));
+            var requestFix = _mapper.Map<Post>(request);
+            requestFix.CreatedAt = _postService.GetByIdAsync(request.Id).Result.CreatedAt;//Fixing CreatedAt Date
+            
+            await _postService.UpdateAsync(requestFix);
 
             return CreateActionResult(CustomResponseDto<PostUpdateDto>.Success(204));//no content response
         }

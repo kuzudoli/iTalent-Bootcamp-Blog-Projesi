@@ -16,23 +16,29 @@ namespace iTalentBootcamp_Blog.Web.Controllers
             _postApiService = postApiService;
         }
 
-        [HttpGet("[action]/{page}")]
-        public async Task<IActionResult> Index(int page)
+        [HttpGet("/{page?}")]
+        public async Task<IActionResult> Index(int page=1)
         {
             //next-previous için currentIndex dönülür
             int pageSize = 3;
-            var pagedPostList = await _postApiService.GetPostsByPage(page, pageSize);
+            var PagedPostListWithPageCount = await _postApiService.GetPostsByPage(page, pageSize);
+            ViewBag.currentIndex = page;
+            ViewBag.currentPageName = "anasayfa";
 
-            return View(pagedPostList);
+            return View(PagedPostListWithPageCount);
         }
 
+        [HttpGet("/Hakkimda")]
         public IActionResult About()
         {
+            ViewBag.currentPageName = "hakkimda";
             return View();
         }
 
+        [HttpGet("/Iletisim")]
         public IActionResult Contact()
         {
+            ViewBag.currentPageName = "iletisim";
             return View();
         }
 
