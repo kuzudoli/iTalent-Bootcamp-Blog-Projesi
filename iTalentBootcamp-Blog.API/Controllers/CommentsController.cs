@@ -20,6 +20,20 @@ namespace iTalentBootcamp_Blog.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpDelete("{id}")]
+        public async Task DeleteById(int id)
+        {
+            await _commentService.DeleteCommentById(id);
+        }
+
+        [HttpGet("{postId}")]
+        public async Task<IActionResult> GetCommentsByPostId(int postId)
+        {
+            var comments = await _commentService.GetCommentsByPostId(postId);
+
+            return CreateActionResult(comments);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Save(CommentCreateDto request)
         {

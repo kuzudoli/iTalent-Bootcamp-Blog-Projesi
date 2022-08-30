@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace iTalentBootcamp_Blog.Core.Dtos
 {
-    public class CustomResponseDto<T>
+    public class CustomResponseDto<T>//List<PostWithCategoryDto>
     {
         public T Data { get; set; }
 

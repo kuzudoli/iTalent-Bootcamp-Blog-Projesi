@@ -1,0 +1,55 @@
+﻿@model List<PostWithCategoryDto>
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h3>Yazılar</h3>
+    <a asp-area="admin" asp-controller="posts" asp-action="AddPost" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-square"></i> Yeni Yazı
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="5%">ID</th>
+                        <th width="15%">Kategori</th>
+                        <th>Başlık</th>
+                        <th width="20%">Oluş. Tarihi</th>
+                        <th width="15%">İşlemler</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Kategori</th>
+                        <th>Başlık</th>
+                        <th>Oluş. Tarihi</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var post in Model)
+                    {
+                        <tr>
+                            <td>@post.Id</td>
+                            <td>@post.Category.Name</td>
+                            <td>@post.Title</td>
+                            <td>@post.CreatedAt.ToShortDateString()</td>
+                            <td>
+                                <a asp-area="Admin" asp-route="UpdatePost" asp-route-postId="@post.Id" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
+                                    <i class="fas fa-edit"></i> Güncelle
+                                </a>
+
+                                <a asp-area="Admin" asp-route="DeletePost" asp-route-postId="@post.Id" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm">
+                                    <i class="fas fa-trash"></i> Sil
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

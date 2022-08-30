@@ -20,6 +20,14 @@ namespace iTalentBootcamp_Blog.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllWithPosts()
+        {
+            var categories = await _categoryService.GetAllWithPostsAsync();
+
+            return CreateActionResult(categories);
+        }
+
         [HttpGet]
         public async Task<IActionResult> All()
         {
