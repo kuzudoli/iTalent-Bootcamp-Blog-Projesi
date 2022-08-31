@@ -17,7 +17,7 @@ namespace iTalentBootcamp_Blog.Repository.Repositories
 
         public async Task<Post> GetPostByIdWithCategoryAndComments(int id)
         {
-            return await _context.Posts.Include(p=>p.Category).Include(p=>p.Comments).FirstAsync(p=>p.Id==id);
+            return await _context.Posts.Include(p => p.Category).Include(p => p.Comments).FirstAsync(p => p.Id == id);
         }
 
         public async Task<List<Post>> GetPopularPosts(int count)
@@ -36,17 +36,22 @@ namespace iTalentBootcamp_Blog.Repository.Repositories
             var pagedPostList = posts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             var pageCount = Convert.ToInt32(Math.Ceiling((decimal)posts.Count / pageSize));
-            
+
             var data = new Tuple<List<Post>, int>(pagedPostList, pageCount);
             return (data);
         }
 
         public void LikePost(int id)
         {
-            var likedPost =  _context.Posts.Find(id);
+            var likedPost = _context.Posts.Find(id);
             likedPost.LikeCount++;
 
             Update(likedPost);
+        }
+
+        public async Task<Post> GetPostByIdWithNoTracking(int id)
+        {
+            return await _context.Posts.Include(p=>p.Category).AsNoTracking().FirstAsync(p => p.Id == id);
         }
     }
 }
