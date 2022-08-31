@@ -65,5 +65,13 @@ namespace iTalentBootcamp_Blog.Service.Services
             _postRepository.LikePost(id);
             await _unitOfWork.CommitAsync();//_unitofwork service içerisinden protected olarak verildi
         }
+
+        public async Task<CustomResponseDto<PostDto>> GetPostByIdWithNoTracking(int id)
+        {
+            var post = await _postRepository.GetPostByIdWithNoTracking(id);
+            var postDto = _mapper.Map<PostDto>(post);
+
+            return CustomResponseDto<PostDto>.Success(200, postDto);
+        }
     }
 }

@@ -19,6 +19,14 @@ namespace iTalentBootcamp_Blog.Web.Services
             return response.Data;
         }
 
+        public async Task<PostDto> GetPostByIdWithNoTracking(int postId)
+        {
+            var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<PostDto>>
+                ($"Posts/GetPostByIdWithNoTracking/{postId}");
+
+            return response.Data;
+        }
+
         public async Task LikePost(int postId)
         {
             await _httpClient.PutAsJsonAsync($"Posts/LikePost/{postId}", postId);

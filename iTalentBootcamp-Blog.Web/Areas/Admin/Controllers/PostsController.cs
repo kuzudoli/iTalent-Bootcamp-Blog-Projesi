@@ -67,7 +67,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
             var categoryList = await _categoryApiService.GetAll();
             ViewBag.categoryList = new SelectList(categoryList, "Id", "Name");
 
-            var postForUpdate = await _postApiService.GetById(postId);
+            var postForUpdate = await _postApiService.GetPostByIdWithNoTracking(postId);
             var postForUpdateDto = _mapper.Map<PostUpdateDto>(postForUpdate);
 
             ViewBag.comments = await _commenttApiService.GetCommentByPostId(postId);
@@ -79,7 +79,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         [Route("Admin/Posts/Update/{postId}", Name = "UpdatePost")]
         public async Task<IActionResult> UpdatePost(PostUpdateDto postUpdateDto, IFormFile photo)
         {
-            var oldPostDto = await _postApiService.GetById(postUpdateDto.Id);
+            var oldPostDto = await _postApiService.GetPostByIdWithNoTracking(postUpdateDto.Id);
 
             postUpdateDto.ImageUrl = await _photoHelper.PhotoUpdate(oldPostDto.ImageUrl, photo);
             await _postApiService.UpdatePost(postUpdateDto);

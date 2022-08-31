@@ -75,6 +75,14 @@ namespace iTalentBootcamp_Blog.API.Controllers
             return CreateActionResult(CustomResponseDto<PostDto>.Success(200, postDto));
         }
 
+        [HttpGet("[action]/{postId}")]
+        public async Task<IActionResult> GetPostByIdWithNoTracking(int postId)
+        {
+            var post = await _postService.GetPostByIdWithNoTracking(postId);
+
+            return CreateActionResult(post);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Save(PostCreateDto request)
         {
@@ -88,7 +96,7 @@ namespace iTalentBootcamp_Blog.API.Controllers
         public async Task<IActionResult> Update(PostUpdateDto request)
         {
             var requestFix = _mapper.Map<Post>(request);
-            requestFix.CreatedAt = _postService.GetByIdAsync(request.Id).Result.CreatedAt;//Fixing CreatedAt Date
+            requestFix.CreatedAt = _postService.GetPostByIdWithNoTracking(request.Id).Result.Data.CreatedAt;//Fixing CreatedAt Date
             
             await _postService.UpdateAsync(requestFix);
 
@@ -98,7 +106,9 @@ namespace iTalentBootcamp_Blog.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var post = await _postService.GetByIdAsync(id);
+            var postDto = await _postService.GetPostByIdWithNoTracking(id);
+            var post = _mapper.Map<Post>(postDto.Data);
+
             await _postService.RemoveAsync(post);
 
             return CreateActionResult(CustomResponseDto<PostDto>.Success(204));
