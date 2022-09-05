@@ -1,10 +1,10 @@
-﻿
-@model CommentCreateDto
+﻿@model CommentCreateDto
 
 <section class="ftco-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 ftco-animate">
+                <input type="hidden" id="postId" value="@ViewBag.post.Id" />
                 <h2 class="mb-3 font-weight-bold">@ViewBag.post.Title</h2>
                 <span class="category mb-3 inline-block">@ViewBag.post.Category.Name</span>
                 <span class="category mb-3 inline-block float-right">@ViewBag.post.CreatedAt</span>
@@ -13,8 +13,8 @@
 
                 <!--like button-->
                 <div class="post-action my-3 float-right d-md-flex align-items-center">
-                    <a asp-route="LikePost" asp-route-postId="@ViewBag.post.Id" id="likeButton"><i class="icon-heart"></i></a>
-                    @ViewBag.post.LikeCount
+                    <div id="likeButton"><i class="icon-heart"></i></div>
+                    <span id="likeCountNumber">@ViewBag.post.LikeCount</span>
                 </div>
 
                 <!--comment-list-->
@@ -60,3 +60,43 @@
         </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function () {
+        var postId = $("#postId").val();
+        $.ajax({
+            url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/'+postId,
+            type: 'get',
+            success: function (data) {
+                document.getElementById("likeCountNumber").innerHTML = data.data.likeCount;
+            },
+            error: function () {
+                alert("error");
+            }
+        })
+
+        $("#likeButton").on("click", function () {
+            $.ajax({
+                url: 'https://localhost:7241/api/Posts/LikePost/'+postId,
+                type: 'put',
+                success: function (result) {
+                    $.ajax({
+                        url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/'+postId,
+                        type: 'get',
+                        success: function (data) {
+                            document.getElementById("likeCountNumber").innerHTML = data.data.likeCount;
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    })
+                },
+                error: function () {
+                    alert("error");
+                }
+            })
+
+
+        })
+    })
+</script>
