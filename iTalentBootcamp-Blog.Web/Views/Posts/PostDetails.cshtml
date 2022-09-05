@@ -1,5 +1,7 @@
 ﻿@model CommentCreateDto
-
+@{
+    var newComment = new CommentCreateDto();
+}
 <section class="ftco-section">
     <div class="container">
         <div class="row">
@@ -39,16 +41,15 @@
 
                     <div class="comment-form-wrap pt-5">
                         <h3 class="mb-5">Yorum yap</h3>
-                        <form method="post" asp-controller="Comments" asp-action="AddComment" class="p-3 p-md-5 bg-light">
+                        <form class="p-3 p-md-5 bg-light">
                             <div class="form-group">
                                 <label for="name">Ad Soyad *</label>
-                                <input type="text" class="form-control" asp-for="AuthorName" id="name">
+                                <input type="text" class="form-control" id="name">
                             </div>
                             <div class="form-group">
                                 <label for="message">Mesaj *</label>
-                                <textarea asp-for="Text" id="message" cols="30" rows="10" class="form-control"></textarea>
+                                <textarea id="message" cols="30" rows="10" class="form-control"></textarea>
                             </div>
-                            <input type="hidden" asp-for="PostId" value="@ViewBag.post.Id" />
                             <div class="form-group">
                                 <input type="submit" value="Gönder" class="btn py-3 px-4 btn-primary">
                             </div>
@@ -62,41 +63,66 @@
 </section>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
+
         var postId = $("#postId").val();
         $.ajax({
-            url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/'+postId,
+            url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/' + postId,
             type: 'get',
-            success: function (data) {
+            success: function(data) {
                 document.getElementById("likeCountNumber").innerHTML = data.data.likeCount;
             },
-            error: function () {
+            error: function() {
                 alert("error");
             }
         })
 
-        $("#likeButton").on("click", function () {
+        $("#likeButton").on("click", function() {
             $.ajax({
-                url: 'https://localhost:7241/api/Posts/LikePost/'+postId,
+                url: 'https://localhost:7241/api/Posts/LikePost/' + postId,
                 type: 'put',
-                success: function (result) {
+                success: function(result) {
                     $.ajax({
-                        url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/'+postId,
+                        url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/' + postId,
                         type: 'get',
-                        success: function (data) {
+                        success: function(data) {
                             document.getElementById("likeCountNumber").innerHTML = data.data.likeCount;
                         },
-                        error: function () {
+                        error: function() {
                             alert("error");
                         }
                     })
                 },
-                error: function () {
+                error: function() {
                     alert("error");
                 }
             })
+        })
 
+        $("form").submit(function(event) {
 
+            alert("girdi");
+
+            var formData = {
+                text : $("#message").val(),
+                authorName : $("#name").val(),
+                postId : parseInt($("#postId").val()),
+            }
+
+            $.ajax({
+                url: 'https://localhost:7241/api/Comments',
+                type: 'post',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function() {
+                    alert("comment posted!");
+                },
+                error: function() {
+                    alert("comment error");
+                }
+            })
+
+            event.preventDefault();
         })
     })
 </script>
