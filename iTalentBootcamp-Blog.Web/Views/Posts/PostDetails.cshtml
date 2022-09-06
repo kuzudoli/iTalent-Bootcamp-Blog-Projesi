@@ -22,8 +22,8 @@
                 <!--comment-list-->
                 <div class="pt-5 mt-5">
                     <h3 class="mb-5 font-weight-bold">@ViewBag.post.Comments.Count Yorum</h3>
-                    <ul class="comment-list">
-                        @foreach (var comment in ViewBag.post.Comments)
+                    <ul id="comment-list" class="comment-list">
+                        @*@foreach (var comment in ViewBag.post.Comments)
                         {
                             <li class="comment">
                                 <div class="vcard bio">
@@ -35,7 +35,7 @@
                                     <p>@comment.Text</p>
                                 </div>
                             </li>
-                        }
+                        }*@
                     </ul>
                     <!-- END comment-list -->
 
@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="message">Mesaj *</label>
-                                <textarea id="message" cols="30" rows="10" class="form-control"></textarea>
+                                <textarea id="message" cols="30" rows="7" class="form-control"></textarea>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Gönder" class="btn py-3 px-4 btn-primary">
@@ -63,50 +63,78 @@
 </section>
 
 <script>
-    $(document).ready(function() {
-
+    $(document).ready(function () {
         var postId = $("#postId").val();
-        $.ajax({
-            url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/' + postId,
-            type: 'get',
-            success: function(data) {
-                document.getElementById("likeCountNumber").innerHTML = data.data.likeCount;
-            },
-            error: function() {
-                alert("error");
-            }
+
+        //LOAD COMMENTS
+        getComments();
+
+        //LIKE BUTTON
+        $("#likeButton").on("click", likePost)
+
+        //SUBMIT COMMENT
+        $("form").submit(function (event) {
+            submitComment();
+            event.preventDefault();
         })
 
-        $("#likeButton").on("click", function() {
+        //FUNCTIONS
+        function getComments(){
+            var commentList = document.getElementById("comment-list");
+            $.ajax({
+                url: 'https://localhost:7241/api/Comments/' + postId,
+                type: 'get',
+                success: function (result) {
+                    let rawComments = result.data;
+                    rawComments.forEach(function (item) {
+                        var li = document.createElement("li");
+                        li.className = "comment";
+                        li.innerHTML = `<div class="vcard bio">
+                                            <img src="/images/person.png">
+                                        </div>
+                                        <div class="comment-body">
+                                            <h3>${item.authorName}</h3>
+                                            <div class="meta">${item.createdAt}</div>
+                                            <p>${item.text}</p>
+                                        </div>`
+                        commentList.appendChild(li);
+                    });
+                },
+                error: function () {
+                    alert("get comment list error");
+                }
+            })
+        }
+
+        function likePost(){
             $.ajax({
                 url: 'https://localhost:7241/api/Posts/LikePost/' + postId,
                 type: 'put',
-                success: function(result) {
-                    $.ajax({
-                        url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/' + postId,
-                        type: 'get',
-                        success: function(data) {
-                            document.getElementById("likeCountNumber").innerHTML = data.data.likeCount;
-                        },
-                        error: function() {
-                            alert("error");
-                        }
-                    })
-                },
-                error: function() {
-                    alert("error");
+                success: getLikeCount,
+                error: function () {
+                    alert("like error");
                 }
             })
-        })
+        }
+        
+        function getLikeCount(){
+            $.ajax({
+                url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/' + postId,
+                type: 'get',
+                success: function (data) {
+                    document.getElementById("likeCountNumber").innerHTML = data.data.likeCount;
+                },
+                error: function () {
+                    alert("get like count error");
+                }
+            })
+        }
 
-        $("form").submit(function(event) {
-
-            alert("girdi");
-
+        function submitComment(){
             var formData = {
-                text : $("#message").val(),
-                authorName : $("#name").val(),
-                postId : parseInt($("#postId").val()),
+                text: $("#message").val(),
+                authorName: $("#name").val(),
+                postId: parseInt($("#postId").val()),
             }
 
             $.ajax({
@@ -114,15 +142,16 @@
                 type: 'post',
                 data: JSON.stringify(formData),
                 contentType: 'application/json',
-                success: function() {
-                    alert("comment posted!");
+                success: function(){
+                    var list = $("#comment-list");
+                    list.empty();
+
+                    getComments()
                 },
-                error: function() {
-                    alert("comment error");
+                error: function () {
+                    alert("comment post error");
                 }
             })
-
-            event.preventDefault();
-        })
+        }
     })
 </script>
