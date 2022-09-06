@@ -23,19 +23,7 @@
                 <div class="pt-5 mt-5">
                     <h3 class="mb-5 font-weight-bold">@ViewBag.post.Comments.Count Yorum</h3>
                     <ul id="comment-list" class="comment-list">
-                        @*@foreach (var comment in ViewBag.post.Comments)
-                        {
-                            <li class="comment">
-                                <div class="vcard bio">
-                                    <img src="/images/person.png">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>@comment.AuthorName</h3>
-                                    <div class="meta">@comment.CreatedAt</div>
-                                    <p>@comment.Text</p>
-                                </div>
-                            </li>
-                        }*@
+                        <!--COMMENT LIST FROM AJAX REQUEST-->
                     </ul>
                     <!-- END comment-list -->
 
@@ -75,6 +63,7 @@
         //SUBMIT COMMENT
         $("form").submit(function (event) {
             submitComment();
+            $("form")[0].reset();
             event.preventDefault();
         })
 
