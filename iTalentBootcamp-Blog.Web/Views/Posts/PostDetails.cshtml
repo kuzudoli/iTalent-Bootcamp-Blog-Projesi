@@ -21,7 +21,7 @@
 
                 <!--comment-list-->
                 <div class="pt-5 mt-5">
-                    <h3 class="mb-5 font-weight-bold">@ViewBag.post.Comments.Count Yorum</h3>
+                    <h3 class="mb-5 font-weight-bold"><span id="commentCount">@ViewBag.post.Comments.Count</span> Yorum</h3>
                     <ul id="comment-list" class="comment-list">
                         <!--COMMENT LIST FROM AJAX REQUEST-->
                     </ul>
@@ -68,24 +68,25 @@
         })
 
         //FUNCTIONS
-        function getComments(){
+        function getComments() {
             var commentList = document.getElementById("comment-list");
             $.ajax({
                 url: 'https://localhost:7241/api/Comments/' + postId,
                 type: 'get',
                 success: function (result) {
                     let rawComments = result.data;
+                    document.getElementById("commentCount").innerText = rawComments.length;
                     rawComments.forEach(function (item) {
                         var li = document.createElement("li");
                         li.className = "comment";
                         li.innerHTML = `<div class="vcard bio">
-                                            <img src="/images/person.png">
-                                        </div>
-                                        <div class="comment-body">
-                                            <h3>${item.authorName}</h3>
-                                            <div class="meta">${item.createdAt}</div>
-                                            <p>${item.text}</p>
-                                        </div>`
+                                                    <img src="/images/person.png">
+                                                </div>
+                                                <div class="comment-body">
+                                                    <h3>${item.authorName}</h3>
+                                                    <div class="meta">${item.createdAt}</div>
+                                                    <p>${item.text}</p>
+                                                </div>`
                         commentList.appendChild(li);
                     });
                 },
@@ -95,18 +96,20 @@
             })
         }
 
-        function likePost(){
+        function likePost() {
             $.ajax({
                 url: 'https://localhost:7241/api/Posts/LikePost/' + postId,
                 type: 'put',
-                success: getLikeCount,
+                success: function(){
+                    getLikeCount();
+                },
                 error: function () {
                     alert("like error");
                 }
             })
         }
-        
-        function getLikeCount(){
+
+        function getLikeCount() {
             $.ajax({
                 url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/' + postId,
                 type: 'get',
@@ -119,7 +122,7 @@
             })
         }
 
-        function submitComment(){
+        function submitComment() {
             var formData = {
                 text: $("#message").val(),
                 authorName: $("#name").val(),
@@ -131,7 +134,7 @@
                 type: 'post',
                 data: JSON.stringify(formData),
                 contentType: 'application/json',
-                success: function(){
+                success: function () {
                     var list = $("#comment-list");
                     list.empty();
 
