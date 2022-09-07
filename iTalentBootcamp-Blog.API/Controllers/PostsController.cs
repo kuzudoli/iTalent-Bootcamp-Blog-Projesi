@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iTalentBootcamp_Blog.API.Controllers
 {
-    
+
     public class PostsController : CustomBaseController
     {
         private readonly IPostService _postService;
@@ -19,6 +19,13 @@ namespace iTalentBootcamp_Blog.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("[action]/{searchText}")]
+        public async Task<IActionResult> GetPostsBySearch(string searchText)
+        {
+            var posts = await _postService.GetPostBySearch(searchText);
+            return CreateActionResult(posts);
+        }
+
         [HttpPut("[action]/{postId}")]
         public async Task<IActionResult> LikePost(int postId)
         {
@@ -27,7 +34,7 @@ namespace iTalentBootcamp_Blog.API.Controllers
         }
 
         [HttpGet("[action]/{page}/{pageSize}")]
-        public async Task<IActionResult> GetPostsByPage(int page,int pageSize)
+        public async Task<IActionResult> GetPostsByPage(int page, int pageSize)
         {
             var posts = await _postService.GetPostsByPage(page, pageSize);
             return CreateActionResult(posts);
@@ -52,7 +59,7 @@ namespace iTalentBootcamp_Blog.API.Controllers
         public async Task<IActionResult> GetPostByIdWithCategoryAndComments(int postId)
         {
             var post = await _postService.GetPostByIdWithCategoryAndComments(postId);
-            
+
             return CreateActionResult(post);
         }
 
@@ -97,7 +104,7 @@ namespace iTalentBootcamp_Blog.API.Controllers
         {
             var requestFix = _mapper.Map<Post>(request);
             requestFix.CreatedAt = _postService.GetPostByIdWithNoTracking(request.Id).Result.Data.CreatedAt;//Fixing CreatedAt Date
-            
+
             await _postService.UpdateAsync(requestFix);
 
             return CreateActionResult(CustomResponseDto<PostUpdateDto>.Success(204));//no content response
