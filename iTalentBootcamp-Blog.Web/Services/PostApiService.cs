@@ -11,9 +11,9 @@ namespace iTalentBootcamp_Blog.Web.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<PostDto>> GetPostsBySearch(string searchText)
+        public async Task<List<PostSearchResultDto>> GetPostsBySearch(string searchText)
         {
-            var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<List<PostDto>>>
+            var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<List<PostSearchResultDto>>>
                 ($"Posts/GetPostsBySearch/{searchText}");
 
             return response.Data;

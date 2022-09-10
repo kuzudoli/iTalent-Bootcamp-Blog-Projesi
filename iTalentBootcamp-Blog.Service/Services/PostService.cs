@@ -74,12 +74,12 @@ namespace iTalentBootcamp_Blog.Service.Services
             return CustomResponseDto<PostDto>.Success(200, postDto);
         }
 
-        public async Task<CustomResponseDto<List<PostDto>>> GetPostBySearch(string searchText)
+        public async Task<CustomResponseDto<List<PostSearchResultDto>>> GetPostBySearch(string searchText)
         {
             var postList = await _postRepository.GetPostBySearch(searchText);
-            var postListDto = _mapper.Map<List<PostDto>>(postList);
+            var postListDto = _mapper.Map<List<PostSearchResultDto>>(postList);
 
-            return CustomResponseDto<List<PostDto>>.Success(200, postListDto);
+            return CustomResponseDto<List<PostSearchResultDto>>.Success(200, postListDto);
         }
     }
 }
