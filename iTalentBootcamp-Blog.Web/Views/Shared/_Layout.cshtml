@@ -84,38 +84,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="~/js/google-map.js"></script>
     <script src="~/js/main.js"></script>
-    <script>
-        $("#searchInput").keyup(function () {
-            var searchText = $("#searchInput").val();
-            var searchResultElement = document.getElementById("searchResult");
-            searchResultElement.classList.add("visible");
 
-            $.ajax({
-                url: 'https://localhost:7241/api/Posts/GetPostsBySearch/' + searchText,
-                type: 'get',
-                success: function (result) {
-                    var resultList = $("#searchResult");
-
-                    resultList.empty();
-
-                    let rawPosts = result.data;
-
-                    rawPosts.forEach(function (item) {
-                        console.log(item);
-                        let li = document.createElement("li");
-                        li.attributes
-                        li.innerHTML = `<a class="searchResult-item" href="/Posts/${item.id}">${item.title}</a>`;
-
-                        searchResultElement.appendChild(li);
-                    });
-                },
-                error: function () {
-                    searchResultElement.classList.remove("visible");
-                }
-            })
-        });
-    </script>
-    @RenderSection("scripts", false)
+    @RenderSectionAsync("Scripts", required:false)
 </body>
 
 </html>

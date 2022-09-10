@@ -50,100 +50,103 @@
     </div>
 </section>
 
-<script>
-    $(document).ready(function () {
-        var postId = $("#postId").val();
+@section Scripts{
+    <script src="~/js/search-text.js"></script>
+    <script>
+        $(document).ready(function () {
+            var postId = $("#postId").val();
 
-        //LOAD COMMENTS
-        getComments();
+            //LOAD COMMENTS
+            getComments();
 
-        //LIKE BUTTON
-        $("#likeButton").on("click", likePost)
+            //LIKE BUTTON
+            $("#likeButton").on("click", likePost)
 
-        //SUBMIT COMMENT
-        $("form").submit(function (event) {
-            submitComment();
-            $("form")[0].reset();
-            event.preventDefault();
-        })
-
-        //FUNCTIONS
-        function getComments() {
-            var commentList = document.getElementById("comment-list");
-            $.ajax({
-                url: 'https://localhost:7241/api/Comments/' + postId,
-                type: 'get',
-                success: function (result) {
-                    let rawComments = result.data;
-                    document.getElementById("commentCount").innerText = rawComments.length;
-                    rawComments.forEach(function (item) {
-                        var li = document.createElement("li");
-                        li.className = "comment";
-                        li.innerHTML = `<div class="vcard bio">
-                                                    <img src="/images/person.png">
-                                                </div>
-                                                <div class="comment-body">
-                                                    <h3>${item.authorName}</h3>
-                                                    <div class="meta">${item.createdAt}</div>
-                                                    <p>${item.text}</p>
-                                                </div>`
-                        commentList.appendChild(li);
-                    });
-                },
-                error: function () {
-                    alert("get comment list error");
-                }
+            //SUBMIT COMMENT
+            $("form").submit(function (event) {
+                submitComment();
+                $("form")[0].reset();
+                event.preventDefault();
             })
-        }
 
-        function likePost() {
-            $.ajax({
-                url: 'https://localhost:7241/api/Posts/LikePost/' + postId,
-                type: 'put',
-                success: function(){
-                    getLikeCount();
-                },
-                error: function () {
-                    alert("like error");
-                }
-            })
-        }
-
-        function getLikeCount() {
-            $.ajax({
-                url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/' + postId,
-                type: 'get',
-                success: function (data) {
-                    document.getElementById("likeCountNumber").innerHTML = data.data.likeCount;
-                },
-                error: function () {
-                    alert("get like count error");
-                }
-            })
-        }
-
-        function submitComment() {
-            var formData = {
-                text: $("#message").val(),
-                authorName: $("#name").val(),
-                postId: parseInt($("#postId").val()),
+            //FUNCTIONS
+            function getComments() {
+                var commentList = document.getElementById("comment-list");
+                $.ajax({
+                    url: 'https://localhost:7241/api/Comments/' + postId,
+                    type: 'get',
+                    success: function (result) {
+                        let rawComments = result.data;
+                        document.getElementById("commentCount").innerText = rawComments.length;
+                        rawComments.forEach(function (item) {
+                            var li = document.createElement("li");
+                            li.className = "comment";
+                            li.innerHTML = `<div class="vcard bio">
+                                                                            <img src="/images/person.png">
+                                                                        </div>
+                                                                        <div class="comment-body">
+                                                                            <h3>${item.authorName}</h3>
+                                                                            <div class="meta">${item.createdAt}</div>
+                                                                            <p>${item.text}</p>
+                                                                        </div>`
+                            commentList.appendChild(li);
+                        });
+                    },
+                    error: function () {
+                        alert("get comment list error");
+                    }
+                })
             }
 
-            $.ajax({
-                url: 'https://localhost:7241/api/Comments',
-                type: 'post',
-                data: JSON.stringify(formData),
-                contentType: 'application/json',
-                success: function () {
-                    var list = $("#comment-list");
-                    list.empty();
+            function likePost() {
+                $.ajax({
+                    url: 'https://localhost:7241/api/Posts/LikePost/' + postId,
+                    type: 'put',
+                    success: function () {
+                        getLikeCount();
+                    },
+                    error: function () {
+                        alert("like error");
+                    }
+                })
+            }
 
-                    getComments()
-                },
-                error: function () {
-                    alert("comment post error");
+            function getLikeCount() {
+                $.ajax({
+                    url: 'https://localhost:7241/api/Posts/GetPostByIdWithNoTracking/' + postId,
+                    type: 'get',
+                    success: function (data) {
+                        document.getElementById("likeCountNumber").innerHTML = data.data.likeCount;
+                    },
+                    error: function () {
+                        alert("get like count error");
+                    }
+                })
+            }
+
+            function submitComment() {
+                var formData = {
+                    text: $("#message").val(),
+                    authorName: $("#name").val(),
+                    postId: parseInt($("#postId").val()),
                 }
-            })
-        }
-    })
-</script>
+
+                $.ajax({
+                    url: 'https://localhost:7241/api/Comments',
+                    type: 'post',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    success: function () {
+                        var list = $("#comment-list");
+                        list.empty();
+
+                        getComments()
+                    },
+                    error: function () {
+                        alert("comment post error");
+                    }
+                })
+            }
+        })
+    </script>
+}
