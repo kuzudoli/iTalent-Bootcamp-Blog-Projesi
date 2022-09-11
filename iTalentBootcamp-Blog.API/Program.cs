@@ -1,23 +1,34 @@
-using iTalentBootcamp_Blog.Core.Repositories;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using iTalentBootcamp_Blog.API.Filters;
+using iTalentBootcamp_Blog.API.Modules;
 using iTalentBootcamp_Blog.Core;
-using iTalentBootcamp_Blog.Repository.Repositories;
-using iTalentBootcamp_Blog.Repository.UnitOfWork;
-using iTalentBootcamp_Blog.Core.Services;
+using iTalentBootcamp_Blog.Core.Dtos;
 using iTalentBootcamp_Blog.Repository;
+using iTalentBootcamp_Blog.Repository.UnitOfWork;
+using iTalentBootcamp_Blog.Service.Mapping;
+using iTalentBootcamp_Blog.Service.Validations;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using iTalentBootcamp_Blog.Service.Services;
-using iTalentBootcamp_Blog.Service.Mapping;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Newtonsoft.Json;
-using Autofac.Extensions.DependencyInjection;
-using Autofac;
-using iTalentBootcamp_Blog.API.Modules;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilterAttribute()));
+    //.AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<PostCreateDtoValidator>());
+
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddScoped<IValidator<PostCreateWithImageDto>, PostCreateDtoValidator>();
+builder.Services.AddScoped<IValidator<PostUpdateDto>, PostUpdateDtoValidator>();
+
+builder.Services.Configure<ApiBehaviorOptions>(config =>
+{
+    config.SuppressModelStateInvalidFilter = true;
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

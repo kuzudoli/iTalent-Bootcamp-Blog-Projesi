@@ -8,11 +8,19 @@ using iTalentBootcamp_Blog.Service.Mapping;
 using iTalentBootcamp_Blog.Web.Services;
 using Microsoft.Extensions.FileProviders;
 using iTalentBootcamp_Blog.Web.Helpers;
+using FluentValidation.AspNetCore;
+using iTalentBootcamp_Blog.Service.Validations;
+using FluentValidation;
+using iTalentBootcamp_Blog.Core.Dtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddScoped<IValidator<PostCreateWithImageDto>, PostCreateDtoValidator>();
+builder.Services.AddScoped<IValidator<PostUpdateDto>, PostUpdateDtoValidator>();
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));

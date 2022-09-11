@@ -78,9 +78,9 @@ namespace iTalentBootcamp_Blog.Web.Services
             await _httpClient.DeleteAsync($"Posts/{postId}");
         }
 
-        public async Task AddPost(PostCreateDto postCreateDto)
+        public async Task AddPost(PostCreateWithImageDto postCreateWithImageDto)
         {
-            await _httpClient.PostAsJsonAsync($"Posts", postCreateDto);
+            await _httpClient.PostAsJsonAsync($"Posts", postCreateWithImageDto);
         }
 
         internal async Task UpdatePost(PostUpdateDto postUpdateDto)

@@ -16,7 +16,7 @@ namespace iTalentBootcamp_Blog.Service.Mapping
             CreateMap<Post, PostDto>().ReverseMap();
             CreateMap<Post, PostCreateDto>().ReverseMap();
 
-            CreateMap<PostCreateWithImageDto, PostCreateDto>();
+            CreateMap<PostCreateWithImageDto, Post>();
 
             CreateMap<Post, PostUpdateDto>().ReverseMap();
             CreateMap<PostDto, PostUpdateDto>().ReverseMap();

@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidation.Results;
 using iTalentBootcamp_Blog.Core.Dtos;
 using iTalentBootcamp_Blog.Web.Helpers;
 using iTalentBootcamp_Blog.Web.Services;
@@ -10,6 +13,8 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class PostsController : Controller
     {
+        private readonly IValidator<PostCreateWithImageDto> _createValidator;
+        private readonly IValidator<PostUpdateDto> _updateValidator;
         private readonly PostApiService _postApiService;
         private readonly CommentApiService _commenttApiService;
         private readonly CategoryApiService _categoryApiService;
@@ -21,13 +26,17 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
             CategoryApiService categoryApiService,
             IMapper mapper,
             CommentApiService commenttApiService,
-            IPhotoHelper photoHelper)
+            IPhotoHelper photoHelper,
+            IValidator<PostCreateWithImageDto> createValidator,
+            IValidator<PostUpdateDto> updateValidator)
         {
             _postApiService = postApiService;
             _categoryApiService = categoryApiService;
             _mapper = mapper;
             _commenttApiService = commenttApiService;
             _photoHelper = photoHelper;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         [HttpGet]
@@ -52,10 +61,18 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         [Route("Admin/Posts/Add", Name = "AddPost")]
         public async Task<IActionResult> AddPost(PostCreateWithImageDto postCreateWithImageDto)
         {
-            var postCreateDto = _mapper.Map<PostCreateDto>(postCreateWithImageDto);
+            ValidationResult result = _createValidator.Validate(postCreateWithImageDto);
+            if (!result.IsValid)
+            {
+                result.AddToModelState(ModelState);
+                var categoryList = await _categoryApiService.GetAll();
+                ViewBag.categoryList = new SelectList(categoryList, "Id", "Name");
+
+                return View(postCreateWithImageDto);
+            }
             //Saves photo to folder and gets filename
-            postCreateDto.ImageUrl = await _photoHelper.PhotoSave(postCreateWithImageDto.ImageFile);
-            await _postApiService.AddPost(postCreateDto);
+            postCreateWithImageDto.ImageUrl = await _photoHelper.PhotoSave(postCreateWithImageDto.ImageFile);
+            await _postApiService.AddPost(postCreateWithImageDto);
 
             return RedirectToRoute("Posts");
         }
@@ -79,6 +96,17 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         [Route("Admin/Posts/Update/{postId}", Name = "UpdatePost")]
         public async Task<IActionResult> UpdatePost(PostUpdateDto postUpdateDto, IFormFile photo)
         {
+            ValidationResult result = _updateValidator.Validate(postUpdateDto);
+            if (!result.IsValid)
+            {
+                result.AddToModelState(ModelState);
+
+                var categoryList = await _categoryApiService.GetAll();
+                ViewBag.categoryList = new SelectList(categoryList, "Id", "Name");
+                ViewBag.comments = await _commenttApiService.GetCommentByPostId(postUpdateDto.Id);
+
+                return View(postUpdateDto);
+            }
             var oldPostDto = await _postApiService.GetPostByIdWithNoTracking(postUpdateDto.Id);
 
             postUpdateDto.ImageUrl = await _photoHelper.PhotoUpdate(oldPostDto.ImageUrl, photo);
