@@ -81,5 +81,13 @@ namespace iTalentBootcamp_Blog.Service.Services
 
             return CustomResponseDto<List<PostSearchResultDto>>.Success(200, postListDto);
         }
+
+        public async Task<CustomResponseDto<PostUpdateDto>> GetPostByIdForUpdate(int id)
+        {
+            var post = await _postRepository.GetPostByIdForUpdate(id);
+            var postUpdateDto = _mapper.Map<PostUpdateDto>(post);
+
+            return CustomResponseDto<PostUpdateDto>.Success(200, postUpdateDto);
+        }
     }
 }

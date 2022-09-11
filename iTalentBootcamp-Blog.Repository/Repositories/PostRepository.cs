@@ -59,5 +59,10 @@ namespace iTalentBootcamp_Blog.Repository.Repositories
             var postList = await _context.Posts.AsNoTracking().Where(p => p.Title.ToLower().Contains(searchText.ToLower())).ToListAsync();
             return postList;
         }
+
+        public async Task<Post> GetPostByIdForUpdate(int id)
+        {
+            return await _context.Posts.Include(p => p.Category).AsNoTracking().FirstAsync(p => p.Id == id);
+        }
     }
 }

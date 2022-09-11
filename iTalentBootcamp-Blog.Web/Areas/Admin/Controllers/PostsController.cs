@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using iTalentBootcamp_Blog.Core.Dtos;
@@ -19,12 +18,10 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         private readonly CommentApiService _commenttApiService;
         private readonly CategoryApiService _categoryApiService;
         private readonly IPhotoHelper _photoHelper;
-        private readonly IMapper _mapper;
 
         public PostsController(
             PostApiService postApiService,
             CategoryApiService categoryApiService,
-            IMapper mapper,
             CommentApiService commenttApiService,
             IPhotoHelper photoHelper,
             IValidator<PostCreateWithImageDto> createValidator,
@@ -32,7 +29,6 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         {
             _postApiService = postApiService;
             _categoryApiService = categoryApiService;
-            _mapper = mapper;
             _commenttApiService = commenttApiService;
             _photoHelper = photoHelper;
             _createValidator = createValidator;
@@ -84,8 +80,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
             var categoryList = await _categoryApiService.GetAll();
             ViewBag.categoryList = new SelectList(categoryList, "Id", "Name");
 
-            var postForUpdate = await _postApiService.GetPostByIdWithNoTracking(postId);
-            var postForUpdateDto = _mapper.Map<PostUpdateDto>(postForUpdate);
+            var postForUpdateDto = await _postApiService.GetPostByIdForUpdate(postId);
 
             ViewBag.comments = await _commenttApiService.GetCommentByPostId(postId);
 

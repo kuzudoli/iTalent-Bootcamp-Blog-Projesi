@@ -90,6 +90,14 @@ namespace iTalentBootcamp_Blog.API.Controllers
             return CreateActionResult(post);
         }
 
+        [HttpGet("[action]/{postId}")]
+        public async Task<IActionResult> GetPostByIdForUpdate(int postId)
+        {
+            var postToUpdate = await _postService.GetPostByIdForUpdate(postId);
+
+            return CreateActionResult(postToUpdate);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Save(PostCreateDto request)
         {
