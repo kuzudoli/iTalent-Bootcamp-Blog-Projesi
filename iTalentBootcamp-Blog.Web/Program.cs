@@ -83,6 +83,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();//for cookie auth
 app.UseAuthorization();
 
 app.MapAreaControllerRoute(
