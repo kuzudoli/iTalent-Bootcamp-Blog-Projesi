@@ -12,6 +12,7 @@ using FluentValidation.AspNetCore;
 using iTalentBootcamp_Blog.Service.Validations;
 using FluentValidation;
 using iTalentBootcamp_Blog.Core.Dtos;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,12 @@ builder.Services.AddDbContext<AppDbContext>(x =>
 
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(x =>
+    {
+        x.LoginPath = "/Auth/Login";
+    });
+
 builder.Services.AddHttpClient<CategoryApiService>(opt =>
 {
     opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
@@ -47,6 +54,11 @@ builder.Services.AddHttpClient<PostApiService>(opt =>
 });
 
 builder.Services.AddHttpClient<CommentApiService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+});
+
+builder.Services.AddHttpClient<AuthApiService>(opt =>
 {
     opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
 });

@@ -35,9 +35,8 @@ namespace iTalentBootcamp_Blog.API.Controllers
         {
             //var user = _mapper.Map<User>(userLoginDto);
             var validUser = await _authService.LoginAsync(username, password);
-            await HttpContext.SignInAsync(validUser.Data.Principle);
 
-            return CreateActionResult(CustomResponseDto<User>.Success(201));
+            return CreateActionResult(validUser);
         }
     }
 }

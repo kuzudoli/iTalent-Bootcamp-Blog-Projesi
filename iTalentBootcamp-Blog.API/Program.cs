@@ -19,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilterAttribute()));
-    //.AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<PostCreateDtoValidator>());
+//.AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<PostCreateDtoValidator>());
 
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddScoped<IValidator<PostCreateWithImageDto>, PostCreateDtoValidator>();
@@ -52,12 +52,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule(new RepoServiceModule()));
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(x =>
-    {
-        x.LoginPath = "/api/Auth/Login";
-    });
 
 builder.Services.AddCors(options =>
 {

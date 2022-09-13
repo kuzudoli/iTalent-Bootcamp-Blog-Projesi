@@ -43,19 +43,9 @@ namespace iTalentBootcamp_Blog.Service.Services
             if (!VerifyPasswordHash(password, validUser.PasswordHash, validUser.PasswordSalt))
                 return CustomResponseDto<UserLoginDto>.Fail("Wrong Password!", 404);
 
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, validUser.UserName),
-                new Claim(ClaimTypes.Name, validUser.Name)
-            };
+            var userLoginDto = _mapper.Map<UserLoginDto>(validUser);
 
-            var userIdentity = new ClaimsIdentity(claims,"Login");
-            ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
-
-            UserLoginDto userLoginDto = new();
-            userLoginDto.UserName = validUser.UserName;
-            userLoginDto.Password = password;
-            userLoginDto.Principle = principal;
+            
 
             return CustomResponseDto<UserLoginDto>.Success(200,userLoginDto);
         }
