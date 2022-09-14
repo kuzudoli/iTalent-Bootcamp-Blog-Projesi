@@ -40,7 +40,7 @@ builder.Services.AddDbContext<AppDbContext>(x =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(x =>
     {
-        x.LoginPath = "/Auth/Login";
+        x.LoginPath = "/Admin/Login";
     });
 
 builder.Services.AddHttpClient<CategoryApiService>(opt =>
