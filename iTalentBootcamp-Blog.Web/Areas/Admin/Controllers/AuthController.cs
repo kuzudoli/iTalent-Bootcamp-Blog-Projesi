@@ -1,4 +1,5 @@
-﻿using iTalentBootcamp_Blog.Web.Services;
+﻿using iTalentBootcamp_Blog.Core.Dtos;
+using iTalentBootcamp_Blog.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -22,11 +23,11 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Route("[area]/Login/{username}/{password}")]
-        public async Task<IActionResult> Login(string username, string password)
+        [HttpPost]
+        [Route("[area]/Login")]
+        public async Task<IActionResult> Login(UserLoginDto userLoginDto)
         {
-            var validUser = await _authApiService.Login(username, password);
+            var validUser = await _authApiService.Login(userLoginDto.UserName, userLoginDto.Password);
 
             var claims = new List<Claim>()
             {
@@ -37,7 +38,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
             ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
 
             await HttpContext.SignInAsync(principal);
-            return Ok();
+            return RedirectToRoute("Dashboard");
         }
     }
 }
