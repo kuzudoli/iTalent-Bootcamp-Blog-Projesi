@@ -1,12 +1,11 @@
 ﻿using iTalentBootcamp_Blog.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing.Text;
 using System.Security.Claims;
 
-namespace iTalentBootcamp_Blog.Web.Controllers
+namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
         private readonly AuthApiService _authApiService;
 
@@ -15,13 +14,15 @@ namespace iTalentBootcamp_Blog.Web.Controllers
             _authApiService = authApiService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        [Route("[area]/Login")]
+        public IActionResult Login()
         {
             return View();
         }
 
         [HttpGet]
-        [Route("Auth/Login/{username}/{password}")]
+        [Route("[area]/Login/{username}/{password}")]
         public async Task<IActionResult> Login(string username, string password)
         {
             var validUser = await _authApiService.Login(username, password);
