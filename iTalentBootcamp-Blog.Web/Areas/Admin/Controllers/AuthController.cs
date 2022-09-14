@@ -5,7 +5,8 @@ using System.Security.Claims;
 
 namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
 {
-    public class AuthController : BaseController
+    [Area("Admin")]
+    public class AuthController : Controller
     {
         private readonly AuthApiService _authApiService;
 
