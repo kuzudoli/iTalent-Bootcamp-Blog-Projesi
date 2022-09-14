@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class CategoriesController : Controller
+    public class CategoriesController : BaseController
     {
         private readonly CategoryApiService _categoryApiService;
         private readonly IMapper _mapper;
@@ -18,7 +17,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/Categories", Name = "Categories")]
+        [Route("[area]/Categories", Name = "Categories")]
         public async Task<IActionResult> Categories()
         {
             var categoryList = await _categoryApiService.GetAll();
@@ -26,14 +25,14 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/Categories/Add")]
+        [Route("[area]/Categories/Add")]
         public async Task<IActionResult> AddCategory()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("Admin/Categories/Add", Name = "AddCategory")]
+        [Route("[area]/Categories/Add", Name = "AddCategory")]
         public async Task<IActionResult> AddCategory(CategoryCreateDto categoryCreateDto)
         {
             await _categoryApiService.AddCategory(categoryCreateDto);
@@ -41,7 +40,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/Categories/Update/{categoryId}")]
+        [Route("[area]/Categories/Update/{categoryId}")]
         public async Task<IActionResult> UpdateCategory(int categoryId)
         {
             var categoryForUpdate = await _categoryApiService.GetById(categoryId);
@@ -51,7 +50,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Route("Admin/Categories/Update/{categoryId}", Name = "UpdateCategory")]
+        [Route("[area]/Categories/Update/{categoryId}", Name = "UpdateCategory")]
         public async Task<IActionResult> UpdateCategory(CategoryUpdateDto categoryUpdateDto)
         {
             await _categoryApiService.UpdateCategory(categoryUpdateDto);
@@ -60,7 +59,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/Categories/Delete/{categoryId}", Name = "DeleteCategory")]
+        [Route("[area]/Categories/Delete/{categoryId}", Name = "DeleteCategory")]
         public async Task<IActionResult> DeleteCategory(int categoryId)
         {
             await _categoryApiService.DeleteCategory(categoryId);

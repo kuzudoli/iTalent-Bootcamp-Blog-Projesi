@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class CommentsController : Controller
+    public class CommentsController : BaseController
     {
         private readonly CommentApiService _commentApiService;
 

@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly PostApiService _postApiService;
         private readonly CategoryApiService _categoryApiService;
@@ -16,7 +15,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/Dashboard", Name = "Dashboard")]
+        [Route("[area]/Dashboard", Name = "Dashboard")]
         public async Task<IActionResult> Index()
         {
             ViewBag.postList = await _postApiService.GetPostsWithCategory();

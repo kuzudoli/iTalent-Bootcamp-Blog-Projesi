@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class PostsController : Controller
+    public class PostsController : BaseController
     {
         private readonly IValidator<PostCreateWithImageDto> _createValidator;
         private readonly IValidator<PostUpdateDto> _updateValidator;
@@ -36,7 +35,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/Posts", Name = "Posts")]
+        [Route("[area]/Posts", Name = "Posts")]
         public async Task<IActionResult> Posts()
         {
             var postList = await _postApiService.GetPostsWithCategory();
@@ -44,7 +43,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/Posts/Add")]
+        [Route("[area]/Posts/Add")]
         public async Task<IActionResult> AddPost()
         {
             var categoryList = await _categoryApiService.GetAll();
@@ -54,7 +53,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Route("Admin/Posts/Add", Name = "AddPost")]
+        [Route("[area]/Posts/Add", Name = "AddPost")]
         public async Task<IActionResult> AddPost(PostCreateWithImageDto postCreateWithImageDto)
         {
             ValidationResult result = _createValidator.Validate(postCreateWithImageDto);
@@ -74,7 +73,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/Posts/Update/{postId}")]
+        [Route("[area]/Posts/Update/{postId}")]
         public async Task<IActionResult> UpdatePost(int postId)
         {
             var categoryList = await _categoryApiService.GetAll();
@@ -88,7 +87,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Route("Admin/Posts/Update/{postId}", Name = "UpdatePost")]
+        [Route("[area]/Posts/Update/{postId}", Name = "UpdatePost")]
         public async Task<IActionResult> UpdatePost(PostUpdateDto postUpdateDto, IFormFile photo)
         {
             ValidationResult result = _updateValidator.Validate(postUpdateDto);
@@ -111,7 +110,7 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/Posts/Delete/{postId}", Name = "DeletePost")]
+        [Route("[area]/Posts/Delete/{postId}", Name = "DeletePost")]
         public async Task<IActionResult> DeletePost(int postId)
         {
             await _postApiService.DeletePost(postId);
