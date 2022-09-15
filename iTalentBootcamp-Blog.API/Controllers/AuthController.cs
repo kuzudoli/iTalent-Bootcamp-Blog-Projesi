@@ -30,11 +30,11 @@ namespace iTalentBootcamp_Blog.API.Controllers
             return CreateActionResult(newUserCreateDto);
         }
 
-        [HttpPost("[action]/{username}/{password}")]
-        public async Task<IActionResult> Login(UserLoginDto userLoginDto)
+        [HttpGet("[action]/{username}/{password}")]
+        public async Task<IActionResult> GetUserByUsername(string username, string password)
         {
             //var user = _mapper.Map<User>(userLoginDto);
-            var validUser = await _authService.LoginAsync(userLoginDto.UserName, userLoginDto.Password);
+            var validUser = await _authService.GetUserByUsername(username, password);
 
             return CreateActionResult(validUser);
         }

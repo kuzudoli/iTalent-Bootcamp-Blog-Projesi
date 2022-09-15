@@ -33,10 +33,10 @@ namespace iTalentBootcamp_Blog.Service.Services
             VerifyPasswordHash = new VerifyPasswordHashDelegate(VerifyPasswordHashMethod);
         }
 
-        public async Task<CustomResponseDto<UserLoginDto>> LoginAsync(string username, string password)
+        public async Task<CustomResponseDto<UserLoginDto>> GetUserByUsername(string username, string password)
         {
-            if (!await _authRepository.AnyAsync(u => u.UserName == username))
-                return CustomResponseDto<UserLoginDto>.Fail("Account Not Found!", 404);
+            //if (!await _authRepository.AnyAsync(u => u.UserName == username))
+            //    return CustomResponseDto<UserLoginDto>.Fail("Account Not Found!", 404);
 
             var validUser = await _authRepository.GetUserByUsername(username);
 
@@ -44,8 +44,6 @@ namespace iTalentBootcamp_Blog.Service.Services
                 return CustomResponseDto<UserLoginDto>.Fail("Wrong Password!", 404);
 
             var userLoginDto = _mapper.Map<UserLoginDto>(validUser);
-
-            
 
             return CustomResponseDto<UserLoginDto>.Success(200,userLoginDto);
         }

@@ -1,4 +1,5 @@
 ﻿using iTalentBootcamp_Blog.Core.Dtos;
+using System.Net.Http.Json;
 
 namespace iTalentBootcamp_Blog.Web.Services
 {
@@ -11,10 +12,10 @@ namespace iTalentBootcamp_Blog.Web.Services
             _httpClient = httpClient;
         }
 
-        public async Task<UserLoginDto> Login(string username, string password)
+        public async Task<UserLoginDto> GetUserByUsername(UserLoginDto userLoginDto)
         {
             var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<UserLoginDto>>
-                ($"Auth/Login/{username}/{password}");
+                ($"Auth/GetUserByUsername/{userLoginDto.UserName}/{userLoginDto.Password}");
 
             return response.Data;
         }
