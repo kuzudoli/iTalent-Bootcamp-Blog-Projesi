@@ -16,9 +16,13 @@
             rawPosts.forEach(function (item) {
                 console.log(item);
                 let li = document.createElement("li");
-                li.attributes
-                li.innerHTML = `<a class="searchResult-item" href="/Posts/${item.id}">${item.title}</a>`;
+                let classList = ["bg-white", "mb-2", "px-3"];
 
+                classList.forEach((item) => {
+                    li.classList.add(item);
+                });
+
+                li.innerHTML = `<a class="searchResult-item" href="/Posts/${item.id}">${item.title}</a>`;
                 searchResultElement.appendChild(li);
             });
         },
