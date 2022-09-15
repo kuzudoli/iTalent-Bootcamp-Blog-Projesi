@@ -32,7 +32,7 @@ namespace iTalentBootcamp_Blog.Repository.Repositories
 
         public async Task<Tuple<List<Post>, int>> GetPostsByPage(int page, int pageSize)
         {
-            var posts = await _context.Posts.Include(p => p.Category).Include(p => p.Comments).ToListAsync();
+            var posts = await _context.Posts.Include(p => p.Category).Include(p => p.Comments).OrderByDescending(p=>p.Id).ToListAsync();
             var pagedPostList = posts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             var pageCount = Convert.ToInt32(Math.Ceiling((decimal)posts.Count / pageSize));
