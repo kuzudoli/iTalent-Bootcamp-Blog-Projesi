@@ -11,7 +11,5 @@ namespace iTalentBootcamp_Blog.Core.Dtos
     {
         public string UserName { get; set; }
         public string Password { get; set; }
-
-        public ClaimsPrincipal Principle { get; set; }
     }
 }
