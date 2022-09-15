@@ -1,7 +1,11 @@
-﻿using iTalentBootcamp_Blog.Core.Dtos;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidation.Results;
+using iTalentBootcamp_Blog.Core.Dtos;
 using iTalentBootcamp_Blog.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 
 namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
@@ -10,10 +14,11 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
     public class AuthController : Controller
     {
         private readonly AuthApiService _authApiService;
-
-        public AuthController(AuthApiService authApiService)
+        private readonly IValidator<UserLoginDto> _loginValidator;
+        public AuthController(AuthApiService authApiService, IValidator<UserLoginDto> loginValidator)
         {
             _authApiService = authApiService;
+            _loginValidator = loginValidator;
         }
 
         [HttpGet]
@@ -27,7 +32,17 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         [Route("[area]/Login")]
         public async Task<IActionResult> Login(UserLoginDto userLoginDto)
         {
-            var validUser = await _authApiService.Login(userLoginDto.UserName, userLoginDto.Password);
+            ValidationResult result = _loginValidator.Validate(userLoginDto);
+            if (!result.IsValid)
+            {
+                result.AddToModelState(ModelState);
+                return View(userLoginDto);
+            }
+
+            var validUser = await _authApiService.GetUserByUsername(userLoginDto);
+
+            if (validUser == null)
+                return View(userLoginDto);
 
             var claims = new List<Claim>()
             {

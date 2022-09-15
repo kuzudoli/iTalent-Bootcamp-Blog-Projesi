@@ -19,10 +19,12 @@
                         <form class="user" method="post" asp-area="Admin" asp-controller="Auth"  asp-action="Login">
                             <div class="form-group">
                                 <input type="text" asp-for="UserName" class="form-control form-control-user" placeholder="Kullanıcı Adı">
+                                <span class="text-danger" asp-validation-for="UserName"></span>
                             </div>
                             <div class="form-group">
                                 <input type="password" asp-for="Password" class="form-control form-control-user"
                                        id="exampleInputPassword" placeholder="Şifre">
+                                <span class="text-danger" asp-validation-for="Password"></span>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox small">
@@ -32,7 +34,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-primary btn-user btn-block" value="Giriş Yap"/>
+                            <input type="submit" class="btn btn-primary btn-user btn-block" value="Giriş Yap" />
                             <hr>
                         </form>
                         <hr>

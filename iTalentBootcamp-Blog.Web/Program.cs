@@ -22,6 +22,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddScoped<IValidator<PostCreateWithImageDto>, PostCreateDtoValidator>();
 builder.Services.AddScoped<IValidator<PostUpdateDto>, PostUpdateDtoValidator>();
+builder.Services.AddScoped<IValidator<UserLoginDto>, UserLoginDtoValidator>();
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
