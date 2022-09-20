@@ -4,6 +4,7 @@ using iTalentBootcamp_Blog.Core.Models;
 using iTalentBootcamp_Blog.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace iTalentBootcamp_Blog.API.Controllers
 {
@@ -37,6 +38,13 @@ namespace iTalentBootcamp_Blog.API.Controllers
         public async Task<IActionResult> GetPostsByPage(int page, int pageSize)
         {
             var posts = await _postService.GetPostsByPage(page, pageSize);
+            return CreateActionResult(posts);
+        }
+
+        [HttpGet("[action]/{categoryId}")]
+        public async Task<IActionResult> GetPostsByCategory(int categoryId, [Required] int page, [Required] int pageSize)
+        {
+            var posts = await _postService.GetPostByCategory(categoryId, page, pageSize);
             return CreateActionResult(posts);
         }
 

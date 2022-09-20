@@ -17,6 +17,7 @@ namespace iTalentBootcamp_Blog.Core.Repositories
         Task<Post> GetPostByIdWithNoTracking(int id);
         Task<Post> GetPostByIdForUpdate(int id);
         Task<List<Post>> GetPostBySearch(string searchText);
+        Task<Tuple<List<Post>, int>> GetPostByCategory(int categoryId, int page, int pageSize);
         void LikePost(int id);
     }
 }

@@ -64,6 +64,14 @@ namespace iTalentBootcamp_Blog.Web.Services
             return response.Data;
         }
 
+        public async Task<PostsWithPageCount> GetPostsByCategory(int categoryId, int page, int pageSize)
+        {
+            var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<PostsWithPageCount>>
+                ($"Posts/GetPostsByCategory/{categoryId}?page={page}&pageSize={pageSize}");
+
+            return response.Data;
+        }
+
         public async Task<List<PostPopularDto>> GetPopularPosts()
         {
             int count = 4;

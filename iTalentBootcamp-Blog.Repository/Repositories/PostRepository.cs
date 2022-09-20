@@ -64,5 +64,21 @@ namespace iTalentBootcamp_Blog.Repository.Repositories
         {
             return await _context.Posts.Include(p => p.Category).AsNoTracking().FirstAsync(p => p.Id == id);
         }
+
+        public async Task<Tuple<List<Post>, int>> GetPostByCategory(int categoryId, int page, int pageSize)
+        {
+            var postList = await _context.Posts
+                .Where(p=>p.CategoryId==categoryId)
+                .Include(p => p.Category)
+                .Include(p => p.Comments)
+                .OrderByDescending(p => p.Id)
+                .ToListAsync();
+
+            var pagedPostList = postList.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var pageCount = Convert.ToInt32(Math.Ceiling((decimal)postList.Count / pageSize));
+
+            var data = new Tuple<List<Post>, int>(pagedPostList, pageCount);
+            return data;
+        }
     }
 }

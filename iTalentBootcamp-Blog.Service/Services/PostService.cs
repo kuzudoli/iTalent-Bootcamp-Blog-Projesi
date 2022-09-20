@@ -89,5 +89,13 @@ namespace iTalentBootcamp_Blog.Service.Services
 
             return CustomResponseDto<PostUpdateDto>.Success(200, postUpdateDto);
         }
+
+        public async Task<CustomResponseDto<PostsWithPageCount>> GetPostByCategory(int categoryId, int page, int pageSize)
+        {
+            var postList = await _postRepository.GetPostByCategory(categoryId, page, pageSize);
+            var postListDto = _mapper.Map<PostsWithPageCount>(postList);
+
+            return CustomResponseDto<PostsWithPageCount>.Success(200, postListDto);
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace iTalentBootcamp_Blog.Core.Services
         Task<CustomResponseDto<PostDto>> GetPostByIdWithNoTracking(int id);
         Task<CustomResponseDto<PostUpdateDto>> GetPostByIdForUpdate(int id);
         Task<CustomResponseDto<List<PostSearchResultDto>>> GetPostBySearch(string searchText);
+        Task<CustomResponseDto<PostsWithPageCount>> GetPostByCategory(int categoryId, int page, int pageSize);
         Task LikePost(int id);
     }
 }
