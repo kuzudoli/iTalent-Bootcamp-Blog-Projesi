@@ -113,8 +113,11 @@ namespace iTalentBootcamp_Blog.Web.Areas.Admin.Controllers
         [Route("[area]/Posts/Delete/{postId}", Name = "DeletePost")]
         public async Task<IActionResult> DeletePost(int postId)
         {
+            var postForDelete = await _postApiService.GetPostByIdWithNoTracking(postId);
+            
             await _postApiService.DeletePost(postId);
-
+            await _photoHelper.PhotoDelete(postForDelete.ImageUrl);
+            
             return RedirectToRoute("Posts");
         }
 

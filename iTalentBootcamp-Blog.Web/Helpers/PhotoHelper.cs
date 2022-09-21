@@ -12,6 +12,24 @@ namespace iTalentBootcamp_Blog.Web.Helpers
             _fileProvider = fileProvider;
         }
 
+        public async Task<bool> PhotoDelete(string photoUrl)
+        {
+            var root = _fileProvider.GetDirectoryContents("wwwroot");
+            var picturesDirectory = root.Single(pD => pD.Name == "pictures");
+
+            //deletes image from path
+            var photoPath = Path.Combine(picturesDirectory.PhysicalPath, photoUrl);
+            FileInfo fileInfo = new FileInfo(photoPath);
+
+            if (fileInfo.Exists)
+            {
+                fileInfo.Delete();
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<string> PhotoSave(IFormFile photo)
         {
             if (photo == null)
@@ -52,12 +70,7 @@ namespace iTalentBootcamp_Blog.Web.Helpers
 
             if (oldUrl != null)
             {
-                //deletes old image from path
-                var oldPath = Path.Combine(picturesDirectory.PhysicalPath, oldUrl);
-                FileInfo fileInfo = new FileInfo(oldPath);
-
-                if (fileInfo.Exists)
-                    fileInfo.Delete();
+                await PhotoDelete(oldUrl);
             }
 
             return fileName;

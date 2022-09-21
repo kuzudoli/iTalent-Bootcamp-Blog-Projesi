@@ -6,5 +6,7 @@ namespace iTalentBootcamp_Blog.Web.Helpers
     {
         Task<string> PhotoSave(IFormFile photo);
         Task<string> PhotoUpdate(string oldUrl, IFormFile photo);
+
+        Task<bool> PhotoDelete(string photoUrl);
     }
 }
