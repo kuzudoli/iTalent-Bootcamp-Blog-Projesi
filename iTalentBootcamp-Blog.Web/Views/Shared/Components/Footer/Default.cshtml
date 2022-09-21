@@ -9,7 +9,7 @@
                     <ul class="list-unstyled categories">
                         @foreach (var c in Model)
                         {
-                            <li><a href="#">@c.Name<span>@c.Posts.Count</span></a></li>
+                            <li><a asp-route="PostByCategory" asp-route-categoryId="@c.Id">@c.Name<span>@c.Posts.Count</span></a></li>
                         }
                     </ul>
                 </div>
