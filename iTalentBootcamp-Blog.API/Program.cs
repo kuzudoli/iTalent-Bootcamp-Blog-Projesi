@@ -8,6 +8,7 @@ using iTalentBootcamp_Blog.Core;
 using iTalentBootcamp_Blog.Core.Dtos;
 using iTalentBootcamp_Blog.Repository;
 using iTalentBootcamp_Blog.Repository.UnitOfWork;
+using iTalentBootcamp_Blog.Service.Extensions;
 using iTalentBootcamp_Blog.Service.Mapping;
 using iTalentBootcamp_Blog.Service.Validations;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -73,6 +74,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseHello();//Custom Middleware
 
 app.UseAuthentication();
 app.UseAuthorization();
