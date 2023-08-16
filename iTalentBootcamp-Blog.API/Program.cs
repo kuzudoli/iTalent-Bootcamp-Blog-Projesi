@@ -10,6 +10,7 @@ using iTalentBootcamp_Blog.Repository;
 using iTalentBootcamp_Blog.Repository.UnitOfWork;
 using iTalentBootcamp_Blog.Service.Extensions;
 using iTalentBootcamp_Blog.Service.Mapping;
+using iTalentBootcamp_Blog.Service.Middlewares;
 using iTalentBootcamp_Blog.Service.Validations;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,13 @@ builder.Services.AddScoped<IValidator<PostUpdateDto>, PostUpdateDtoValidator>();
 builder.Services.Configure<ApiBehaviorOptions>(config =>
 {
     config.SuppressModelStateInvalidFilter = true;
+});
+
+builder.Services.AddLogging(configuation =>
+{
+    configuation.ClearProviders()
+    .AddDebug()
+    .AddConsole();
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -76,6 +84,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseHello();//Custom Middleware
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -38,5 +38,15 @@ namespace iTalentBootcamp_Blog.API.Controllers
 
             return CreateActionResult(validUser);
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> islemYap()
+        {
+            int a = 10;
+            int b = 0;
+            a = a / b;
+
+            return Ok(a);
+        }
     }
 }
