@@ -23,8 +23,16 @@ namespace iTalentBootcamp_Blog.Service.Middlewares
             }
             catch (Exception ex)
             {
-                //Custom File Loglama
                 var exMessage = string.Concat(ex.Message, " - Date -> ", DateTime.Now);
+                await WriteFileLog(exMessage);
+                _logger.LogError(exMessage);
+
+            }
+
+        }
+
+        private async Task WriteFileLog(string exMessage)
+        {
                 var path = ".\\ExceptionLog.txt";
                 var fileOptions = new FileStreamOptions
                 {
@@ -32,10 +40,11 @@ namespace iTalentBootcamp_Blog.Service.Middlewares
                     Mode = FileMode.Append
                 };
 
-                using(var streamWriter = new StreamWriter(path, Encoding.UTF8, fileOptions))
+            using (var streamWriter = new StreamWriter(path, Encoding.UTF8, fileOptions))
                 {
                     await streamWriter.WriteLineAsync(exMessage);
                 }
+        }
 
                 //Console Loglama
                 _logger.LogError(exMessage);
