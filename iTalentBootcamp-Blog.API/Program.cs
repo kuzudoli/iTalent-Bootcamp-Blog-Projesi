@@ -20,7 +20,12 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilterAttribute()));
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new ValidateFilterAttribute());
+    //options.Filters.Add<MerchantCodeActionFilter>();  //ActionFilter kullanılacaksa buradaki filtrelere eklenmeli
+    //options.Filters.Add<MerchantCodeActionFilterAttribute>(); lFakat attributelerin burada tanıtılmasına gerek yok
+});
 //.AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<PostCreateDtoValidator>());
 
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
