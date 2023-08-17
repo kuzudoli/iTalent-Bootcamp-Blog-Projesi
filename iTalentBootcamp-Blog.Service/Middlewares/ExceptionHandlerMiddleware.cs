@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Net;
 using System.Text;
 
 namespace iTalentBootcamp_Blog.Service.Middlewares
@@ -27,29 +29,34 @@ namespace iTalentBootcamp_Blog.Service.Middlewares
                 await WriteFileLog(exMessage);
                 _logger.LogError(exMessage);
 
+                await ManipulateResponse(context, exMessage);
             }
 
         }
 
         private async Task WriteFileLog(string exMessage)
         {
-                var path = ".\\ExceptionLog.txt";
-                var fileOptions = new FileStreamOptions
-                {
-                    Access = FileAccess.Write,
-                    Mode = FileMode.Append
-                };
+            var path = ".\\ExceptionLog.txt";
+            var fileOptions = new FileStreamOptions
+            {
+                Access = FileAccess.Write,
+                Mode = FileMode.Append
+            };
 
             using (var streamWriter = new StreamWriter(path, Encoding.UTF8, fileOptions))
-                {
-                    await streamWriter.WriteLineAsync(exMessage);
-                }
+            {
+                await streamWriter.WriteLineAsync(exMessage);
+            }
         }
 
-                //Console Loglama
-                _logger.LogError(exMessage);
-            }
-            
+        private async Task ManipulateResponse(HttpContext context, string exMessage)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            var resp = JsonConvert.SerializeObject(new { Error = exMessage},Formatting.None);
+
+            await context.Response.WriteAsync(resp);
         }
     }
 }

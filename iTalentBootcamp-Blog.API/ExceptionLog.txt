@@ -4,3 +4,5 @@ program patladı! - Date -> 16.08.2023 20:55:31
 program patladı! - Date -> 16.08.2023 20:55:49
 program patladı! - Date -> 16.08.2023 20:55:51
 Attempted to divide by zero. - Date -> 16.08.2023 20:55:57
+Attempted to divide by zero. - Date -> 17.08.2023 15:27:52
+Attempted to divide by zero. - Date -> 17.08.2023 15:31:49
