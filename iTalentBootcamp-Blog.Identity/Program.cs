@@ -1,4 +1,5 @@
 using iTalentBootcamp_Blog.Identity.Entity;
+using iTalentBootcamp_Blog.Identity.Extensions;
 using iTalentBootcamp_Blog.Identity.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,8 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
 });
-builder.Services.AddIdentity<AppUser, AppRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentityWithOpt();//StartupExtension
 
 var app = builder.Build();
 
@@ -32,6 +32,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Auth}/{action=SignIn}/{id?}");
 
 app.Run();
