@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTalentBootcamp-Blog.Core",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTalentBootcamp-Blog.Service", "iTalentBootcamp-Blog.Service\iTalentBootcamp-Blog.Service.csproj", "{4178FB16-328E-4933-BC9C-2534140850D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTalentBootcamp-Blog.Web", "iTalentBootcamp-Blog.Web\iTalentBootcamp-Blog.Web.csproj", "{6D046D22-DBF6-448F-94DE-FFA819E4F60A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTalentBootcamp-Blog.Web", "iTalentBootcamp-Blog.Web\iTalentBootcamp-Blog.Web.csproj", "{6D046D22-DBF6-448F-94DE-FFA819E4F60A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTalentBootcamp-Blog.Identity", "iTalentBootcamp-Blog.Identity\iTalentBootcamp-Blog.Identity.csproj", "{C086BF63-9170-4663-9AAF-A9F42942BB45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{6D046D22-DBF6-448F-94DE-FFA819E4F60A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D046D22-DBF6-448F-94DE-FFA819E4F60A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D046D22-DBF6-448F-94DE-FFA819E4F60A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C086BF63-9170-4663-9AAF-A9F42942BB45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C086BF63-9170-4663-9AAF-A9F42942BB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C086BF63-9170-4663-9AAF-A9F42942BB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C086BF63-9170-4663-9AAF-A9F42942BB45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
