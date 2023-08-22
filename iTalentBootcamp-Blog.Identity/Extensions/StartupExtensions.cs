@@ -1,4 +1,5 @@
-﻿using iTalentBootcamp_Blog.Identity.Entity;
+﻿using iTalentBootcamp_Blog.Identity.CustomValidations;
+using iTalentBootcamp_Blog.Identity.Entity;
 using iTalentBootcamp_Blog.Identity.Repository;
 
 namespace iTalentBootcamp_Blog.Identity.Extensions
@@ -12,7 +13,8 @@ namespace iTalentBootcamp_Blog.Identity.Extensions
                 opt.User.RequireUniqueEmail = true;
                 opt.Password.RequireUppercase = false;
                 opt.Password.RequireNonAlphanumeric = false;
-            }).AddEntityFrameworkStores<AppDbContext>();
+            }).AddEntityFrameworkStores<AppDbContext>()
+            .AddPasswordValidator<PasswordValidator>();
         }
     }
 }
