@@ -14,7 +14,8 @@ namespace iTalentBootcamp_Blog.Identity.Extensions
                 opt.Password.RequireUppercase = false;
                 opt.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<AppDbContext>()
-            .AddPasswordValidator<PasswordValidator>();
+            .AddPasswordValidator<PasswordValidator>()
+            .AddUserValidator<UserValidator>();
         }
     }
 }
