@@ -11,7 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
 });
-builder.Services.AddIdentityWithOpt();//StartupExtension
+builder.Services.AddIdentityWithOpt(builder.Configuration);//StartupExtension
 
 var app = builder.Build();
 
