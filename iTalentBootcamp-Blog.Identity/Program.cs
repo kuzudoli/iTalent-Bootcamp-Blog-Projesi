@@ -20,6 +20,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
     opt.Cookie = cookieBuilder;
     
     opt.LoginPath = new PathString("/Auth/SignIn");
+    opt.LogoutPath = new PathString("/Member/SignOut");
     opt.ExpireTimeSpan = TimeSpan.FromDays(60);
     opt.SlidingExpiration = true;//Expire süresi katlanır
 });

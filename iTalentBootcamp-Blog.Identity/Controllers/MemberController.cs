@@ -14,10 +14,9 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SignOut()
+        public async Task SignOut()
         {
             await _signInManager.SignOutAsync();
-            return Redirect("/Home/Index");
         }
     }
 }

@@ -10,7 +10,7 @@
 <div class="container">
     @if (User.Identity.IsAuthenticated)
     {
-        <a class="btn btn-danger" asp-controller="Member" asp-action="SignOut">Çıkış Yap</a>
+        <a class="btn btn-danger" asp-route-returnurl="/Home/Index" asp-controller="Member" asp-action="SignOut">Çıkış Yap</a>
     }
     else
     {
