@@ -12,7 +12,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
 });
 builder.Services.AddIdentityWithOpt(builder.Configuration);//StartupExtension
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    var cookieBuilder = new CookieBuilder();
 
+    cookieBuilder.Name = "AuthCookie";
+    opt.Cookie = cookieBuilder;
+    
+    opt.LoginPath = new PathString("/Auth/SignIn");
+    opt.ExpireTimeSpan = TimeSpan.FromDays(60);
+    opt.SlidingExpiration = true;//Expire süresi katlanır
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,9 +39,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Auth}/{action=SignIn}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
