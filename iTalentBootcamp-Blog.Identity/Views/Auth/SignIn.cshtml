@@ -3,6 +3,9 @@
     Layout = "_Layout";
     string redirectUrl = Context.Request.Query["returnUrl"];
 }
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial");
+}
 @model SignInViewModel
 <div class="container">
 
