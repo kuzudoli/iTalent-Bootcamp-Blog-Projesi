@@ -109,8 +109,8 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
             {
-                ViewBag.Info = "Şifre sıfırlama bağlantısı, e-posta adresine gönderildi.";
-                return View();
+                TempData["Info"] = "Şifre sıfırlama bağlantısı, e-posta adresine gönderildi.";
+                return RedirectToAction(nameof(ForgotPassword));
             }
 
             string passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
