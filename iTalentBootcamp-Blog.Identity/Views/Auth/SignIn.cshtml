@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Giriş Yap";
     Layout = "_Layout";
+    string redirectUrl = Context.Request.Query["returnUrl"];
 }
 @model SignInViewModel
 <div class="container">
@@ -19,7 +20,7 @@
                         <div asp-validation-summary="ModelOnly" id="errMsg" style="color:white;font-weight:500;background-color:red;border-radius:5px;">
                             @ViewBag.Message
                         </div>
-                        <form class="user" method="post" asp-controller="Auth" asp-action="SignIn">
+                        <form class="user" method="post" asp-controller="Auth" asp-action="SignIn" asp-route-returnUrl="@redirectUrl">
                             <div class="form-group">
                                 <input type="email" asp-for="Email" class="form-control form-control-user" placeholder="Email">
                                 <span class="text-danger" asp-validation-for="Email"></span>
