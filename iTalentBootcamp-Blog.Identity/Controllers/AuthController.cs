@@ -97,5 +97,29 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
             ModelState.AddModelIdentityError(new List<string>() { errStr });
             return View();
         }
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+                ViewBag.Info = "Şifre sıfırlama bağlantısı, e-posta adresine gönderildi.";
+                return View();
+            }
+
+            string passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            string passwordResetLink = Url.Action("ResetPassword", "Auth", new {userId=user.Id,token=passwordResetToken})!;
+
+            //Email Service
+
+            TempData["Info"] = "Şifre sıfırlama bağlantısı, e-posta adresine gönderildi.";
+            return RedirectToAction(nameof(ForgotPassword));
+        }
     }
 }

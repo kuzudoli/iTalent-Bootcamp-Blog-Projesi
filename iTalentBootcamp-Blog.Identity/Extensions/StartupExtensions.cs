@@ -2,6 +2,7 @@
 using iTalentBootcamp_Blog.Identity.Entity;
 using iTalentBootcamp_Blog.Identity.Localization;
 using iTalentBootcamp_Blog.Identity.Repository;
+using Microsoft.AspNetCore.Identity;
 
 namespace iTalentBootcamp_Blog.Identity.Extensions
 {
@@ -9,6 +10,11 @@ namespace iTalentBootcamp_Blog.Identity.Extensions
     {
         public static void AddIdentityWithOpt(this IServiceCollection services, ConfigurationManager configuration)
         {
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+            {
+                opt.TokenLifespan = TimeSpan.FromHours(1);
+            });
+
             services.AddIdentity<AppUser, AppRole>(opt =>
             {
                 opt.User.RequireUniqueEmail = true;
@@ -20,7 +26,8 @@ namespace iTalentBootcamp_Blog.Identity.Extensions
             }).AddEntityFrameworkStores<AppDbContext>()
             .AddPasswordValidator<PasswordValidator>()
             .AddUserValidator<UserValidator>()
-            .AddErrorDescriber<LocalizationIdentityErrorDescriber>();
+            .AddErrorDescriber<LocalizationIdentityErrorDescriber>()
+            .AddDefaultTokenProviders();
         }
     }
 }
