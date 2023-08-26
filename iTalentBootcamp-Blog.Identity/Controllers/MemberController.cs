@@ -1,4 +1,5 @@
 ﻿using iTalentBootcamp_Blog.Identity.Entity;
+using iTalentBootcamp_Blog.Identity.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +10,27 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
     public class MemberController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public MemberController(SignInManager<AppUser> signInManager)
+        public MemberController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var userViewModel = new UserViewModel()
+            {
+                Username = currentUser.UserName,
+                Email = currentUser.Email,
+                PhoneNumber = currentUser.PhoneNumber
+            };
+
+
+            return View(userViewModel);
         }
 
         [HttpGet]
