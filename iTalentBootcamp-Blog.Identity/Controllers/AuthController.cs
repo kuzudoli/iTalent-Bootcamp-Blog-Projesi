@@ -150,6 +150,7 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
             }
 
             var result = await _userManager.ResetPasswordAsync(user, token.ToString(), request.Password);
+            await _userManager.UpdateSecurityStampAsync(user);
 
             return RedirectToAction(nameof(SignIn));
         }

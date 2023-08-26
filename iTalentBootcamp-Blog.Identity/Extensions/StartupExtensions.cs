@@ -28,6 +28,13 @@ namespace iTalentBootcamp_Blog.Identity.Extensions
             .AddUserValidator<UserValidator>()
             .AddErrorDescriber<LocalizationIdentityErrorDescriber>()
             .AddDefaultTokenProviders();
+
+            /*Identity (default) her 30 dakikada bir cookie ve db'de bulunan security stamp alanını karşılaştırır,
+            eşleşmediği takdirde kullanıcıyı logout eder.*/
+            services.Configure<SecurityStampValidatorOptions>(opt =>
+            {
+                opt.ValidationInterval = TimeSpan.FromMinutes(25);
+            });
         }
     }
 }
