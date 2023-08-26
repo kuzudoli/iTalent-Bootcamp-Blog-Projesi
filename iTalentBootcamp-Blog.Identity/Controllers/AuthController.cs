@@ -1,8 +1,9 @@
 ﻿using iTalentBootcamp_Blog.Identity.Entity;
+using iTalentBootcamp_Blog.Identity.Extensions;
+using iTalentBootcamp_Blog.Identity.Services;
 using iTalentBootcamp_Blog.Identity.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using iTalentBootcamp_Blog.Identity.Extensions;
 
 namespace iTalentBootcamp_Blog.Identity.Controllers
 {
@@ -11,16 +12,18 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
         private readonly string _authKey;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IEmailService _emailService;
         private readonly IConfiguration _conf;
         private readonly int _failedLoginMaxCount;
 
-        public AuthController(UserManager<AppUser> userManager, IConfiguration conf, SignInManager<AppUser> signInManager)
+        public AuthController(UserManager<AppUser> userManager, IConfiguration conf, SignInManager<AppUser> signInManager, IEmailService emailService)
         {
             _userManager = userManager;
             _conf = conf;
             _authKey = _conf["AuthKey"];
             _signInManager = signInManager;
             _failedLoginMaxCount = int.Parse(_conf["IdentityOptions:FailedLoginMaxCount"]);
+            _emailService = emailService;
         }
 
         public IActionResult SignUp()
@@ -114,9 +117,9 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
             }
 
             string passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-            string passwordResetLink = Url.Action("ResetPassword", "Auth", new {userId=user.Id,token=passwordResetToken})!;
+            string passwordResetLink = Url.Action("ResetPassword", "Auth", new { userId = user.Id, token = passwordResetToken }, HttpContext.Request.Scheme)!;
 
-            //Email Service
+            await _emailService.SendResetPasswordEmailAsync(passwordResetLink, request.Email);
 
             TempData["Info"] = "Şifre sıfırlama bağlantısı, e-posta adresine gönderildi.";
             return RedirectToAction(nameof(ForgotPassword));
