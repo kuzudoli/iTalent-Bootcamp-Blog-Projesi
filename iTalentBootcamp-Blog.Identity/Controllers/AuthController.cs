@@ -70,7 +70,7 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
         public async Task<IActionResult> SignIn(SignInViewModel request, string returnUrl)
         {
             if (string.IsNullOrEmpty(returnUrl))
-                returnUrl = Url.Action("Index", "Home");
+                returnUrl = Url.Action("Index", "Member");
 
             var hasUser = await _userManager.FindByEmailAsync(request.Email);
             if (hasUser == null)
