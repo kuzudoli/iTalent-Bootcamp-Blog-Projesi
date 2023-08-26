@@ -2,7 +2,19 @@
 }
 @model UserViewModel
 <div class="container">
-    <div class="row">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <p id="info" style="color:green;font-weight:600;background-color:lightgreen;padding:10px;border-radius:25px;text-align:center;">
+            @TempData["SuccessMessage"]
+        </p>
+    }
+    <div class="row pt-2">
+        <div class="col-md-6 offset-md-3">
+            <a class="btn btn-danger" asp-route-returnurl="/Home/Index" asp-controller="Member" asp-action="SignOut">Çıkış Yap</a>
+            <a class="btn btn-success" asp-controller="Member" asp-action="PasswordChange">Şifremi Değiştir</a>
+        </div>
+    </div>
+    <div class="row pt-2">
         <div class="col-md-6 offset-md-3">
             <table class="table">
                 <thead>
