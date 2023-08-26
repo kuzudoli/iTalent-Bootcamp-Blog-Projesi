@@ -124,5 +124,34 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
             TempData["Info"] = "Şifre sıfırlama bağlantısı, e-posta adresine gönderildi.";
             return RedirectToAction(nameof(ForgotPassword));
         }
+
+        public IActionResult ResetPassword(string userId, string token)
+        {
+            TempData["userId"] = userId;
+            TempData["token"] = token;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel request)
+        {
+            var userId = TempData["userId"];
+            var token = TempData["token"];
+
+            if (userId == null || token == null)
+                throw new Exception("Bir hata oluştu. Daha sonra tekrar deneyiniz.");
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                ModelState.AddModelIdentityError(new List<string>() { "Bir hata oluştu. Daha sonra tekrar deneyiniz." });
+                return View();
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, token.ToString(), request.Password);
+
+            return RedirectToAction(nameof(SignIn));
+        }
     }
 }
