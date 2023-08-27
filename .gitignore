@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Identity User Images
+iTalentBootcamp-Blog.Identity/wwwroot/user-images/
