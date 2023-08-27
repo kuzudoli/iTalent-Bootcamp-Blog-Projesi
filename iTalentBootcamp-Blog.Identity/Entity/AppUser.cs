@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using iTalentBootcamp_Blog.Identity.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace iTalentBootcamp_Blog.Identity.Entity
 {
@@ -7,6 +8,6 @@ namespace iTalentBootcamp_Blog.Identity.Entity
         public string City { get; set; }
         public string Picture { get; set; }
         public DateTime BirthDay { get; set; }
-        public bool Gender { get; set; }
+        public Gender Gender { get; set; }
     }
 }

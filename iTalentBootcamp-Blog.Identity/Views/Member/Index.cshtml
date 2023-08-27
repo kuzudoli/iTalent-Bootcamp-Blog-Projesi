@@ -10,8 +10,14 @@
     }
     <div class="row pt-2">
         <div class="col-md-6 offset-md-3">
+            <img class="rounded mx-auto d-block" width="250px" height="250px" src="/user-images/@Model.PictureUrl"/>
+        </div>
+    </div>
+    <div class="row pt-2">
+        <div class="col-md-6 offset-md-3">
             <a class="btn btn-danger" asp-route-returnurl="/Home/Index" asp-controller="Member" asp-action="SignOut">Çıkış Yap</a>
             <a class="btn btn-success" asp-controller="Member" asp-action="PasswordChange">Şifremi Değiştir</a>
+            <a class="btn btn-primary" asp-controller="Member" asp-action="UserEdit">Profilini Düzenle</a>
         </div>
     </div>
     <div class="row pt-2">

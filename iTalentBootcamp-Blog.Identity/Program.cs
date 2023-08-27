@@ -3,6 +3,7 @@ using iTalentBootcamp_Blog.Identity.Extensions;
 using iTalentBootcamp_Blog.Identity.Repository;
 using iTalentBootcamp_Blog.Identity.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.Configure<EmailConfigurations>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
 
 builder.Services.AddIdentityWithOpt(builder.Configuration);//StartupExtension
 builder.Services.AddScoped<IEmailService, EmailService>();
