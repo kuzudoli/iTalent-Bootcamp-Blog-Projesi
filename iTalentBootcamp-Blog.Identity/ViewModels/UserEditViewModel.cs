@@ -15,9 +15,9 @@ namespace iTalentBootcamp_Blog.Identity.ViewModels
         [Required(ErrorMessage = "Telefon Numarası boş bırakılamaz!")]
         public string Phone { get; set; }
 
-        public string City { get; set; }
-        public IFormFile Picture { get; set; }
-        public DateTime BirthDay { get; set; }
-        public Gender Gender { get; set; }
+        public string? City { get; set; }
+        public IFormFile? Picture { get; set; }
+        public DateTime? BirthDay { get; set; }
+        public Gender? Gender { get; set; }
     }
 }
