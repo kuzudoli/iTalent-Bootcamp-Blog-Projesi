@@ -25,7 +25,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
 
     cookieBuilder.Name = "AuthCookie";
     opt.Cookie = cookieBuilder;
-    
+
     opt.LoginPath = new PathString("/Auth/SignIn");
     opt.LogoutPath = new PathString("/Member/SignOut");
     opt.ExpireTimeSpan = TimeSpan.FromDays(60);
@@ -48,6 +48,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
