@@ -21,17 +21,20 @@ namespace iTalentBootcamp_Blog.Identity.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
+        [Authorize(Roles = "admin,role-action")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "admin,role-action")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "admin,role-action")]
         [HttpPost]
         public async Task<IActionResult> Create(RoleCreateViewModel request)
         {
