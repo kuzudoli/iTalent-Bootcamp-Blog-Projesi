@@ -1,5 +1,4 @@
-﻿@{
-}
+﻿@using System.Security.Claims
 @model UserViewModel
 <div class="container">
     @if (TempData["SuccessMessage"] != null)
@@ -18,6 +17,12 @@
             <a class="btn btn-danger" asp-route-returnurl="/Home/Index" asp-controller="Member" asp-action="SignOut">Çıkış Yap</a>
             <a class="btn btn-success" asp-controller="Member" asp-action="PasswordChange">Şifremi Değiştir</a>
             <a class="btn btn-primary" asp-controller="Member" asp-action="UserEdit">Profilini Düzenle</a>
+            @{
+                if(User.HasClaim(x=>x.Type == ClaimTypes.Role && x.Value == "admin"))
+                {
+                    <a class="btn btn-dark" asp-area="Admin" asp-controller="Roles" asp-action="Index">Admin</a>
+                }
+            }
         </div>
     </div>
     <div class="row pt-2">
