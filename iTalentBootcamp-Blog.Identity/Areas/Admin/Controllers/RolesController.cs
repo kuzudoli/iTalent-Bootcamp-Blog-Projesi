@@ -1,8 +1,11 @@
 ﻿using iTalentBootcamp_Blog.Identity.Areas.Admin.Models;
 using iTalentBootcamp_Blog.Identity.Entity;
 using iTalentBootcamp_Blog.Identity.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace iTalentBootcamp_Blog.Identity.Areas.Admin.Controllers
 {
@@ -44,5 +47,49 @@ namespace iTalentBootcamp_Blog.Identity.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(RolesController.Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AssignRoleToUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return View();
+            ViewBag.userId = user.Id;
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var roles = await _roleManager.Roles.ToListAsync();
+            var roleViewModelList = new List<AssignRoleToUserViewModel>();
+
+            foreach (var role in roles)
+            {
+                roleViewModelList.Add(new AssignRoleToUserViewModel()
+                {
+                    Id = role.Id,
+                    Name = role.Name,
+                    Exist = userRoles.Contains(role.Name)
+                });
+            }
+
+            return View(roleViewModelList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignRoleToUser(string userId, List<AssignRoleToUserViewModel> requestList)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return View();
+
+            foreach (var role in requestList)
+            {
+                if (role.Exist)
+                    await _userManager.AddToRoleAsync(user, role.Name);
+                else
+                    await _userManager.RemoveFromRoleAsync(user, role.Name);
+            }
+
+            return View();
+        }
+
     }
 }
