@@ -148,5 +148,14 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AccessDenied(string ReturnUrl)
+        {
+            string message = "Bu sayfayı görmek için gerekli yetkiniz bulunmamakta. Lütfen yöneticiniz ile görüşün.";
+            ViewBag.message = message;
+
+            return View();
+        }
     }
 }
