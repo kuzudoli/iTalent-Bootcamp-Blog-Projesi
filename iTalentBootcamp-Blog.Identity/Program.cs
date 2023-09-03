@@ -26,7 +26,7 @@ builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("GiresunPolicy", policy =>
     {
-        policy.RequireClaim("city","Giresun");
+        policy.RequireClaim("city","Giresun");//(Claim-based Authorization) Herhangi bir business yok sadece varlığı kontrol ediliyor.
     });
 });
 builder.Services.ConfigureApplicationCookie(opt =>
