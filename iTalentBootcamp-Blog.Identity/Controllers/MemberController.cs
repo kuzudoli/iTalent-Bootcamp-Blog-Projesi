@@ -157,5 +157,12 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
 
             return View();
         }
+
+        [Authorize(Roles ="admin", Policy = "ExchangePolicy")]
+        [HttpGet]
+        public IActionResult Exchange()
+        {
+            return View();
+        }
     }
 }

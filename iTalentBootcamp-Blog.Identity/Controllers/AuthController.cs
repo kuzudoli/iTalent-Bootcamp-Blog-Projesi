@@ -4,6 +4,7 @@ using iTalentBootcamp_Blog.Identity.Services;
 using iTalentBootcamp_Blog.Identity.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace iTalentBootcamp_Blog.Identity.Controllers
 {
@@ -50,15 +51,25 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
                 PhoneNumber = request.Phone
             }, request.Password);
 
-            if (identityResult.Succeeded)
+            if (!identityResult.Succeeded)
             {
-                ViewBag.Message = "Üyelik kayıt işlemi başarıyla gerçekleştirildi.";
-                return View("SignIn");
+                ModelState.AddModelIdentityError(identityResult.Errors.Select(x => x.Description).ToList());
+                return View();
             }
 
-            ModelState.AddModelIdentityError(identityResult.Errors.Select(x => x.Description).ToList());
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            var exchangeClaim = new Claim("ExchangeExpireDate", DateTime.Now.AddDays(1).ToString());
 
-            return View();
+            var claimResult = await _userManager.AddClaimAsync(user, exchangeClaim);
+
+            if (!claimResult.Succeeded)
+            {
+                ModelState.AddModelIdentityError(claimResult.Errors.Select(x => x.Description).ToList());
+                return View();
+            }
+
+            ViewBag.Message = "Üyelik kayıt işlemi başarıyla gerçekleştirildi.";
+            return View("SignIn");
         }
 
         public IActionResult SignIn()

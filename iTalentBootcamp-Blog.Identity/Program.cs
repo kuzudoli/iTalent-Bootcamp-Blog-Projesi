@@ -2,8 +2,10 @@ using iTalentBootcamp_Blog.Identity.ClaimProviders;
 using iTalentBootcamp_Blog.Identity.Configurations;
 using iTalentBootcamp_Blog.Identity.Extensions;
 using iTalentBootcamp_Blog.Identity.Repository;
+using iTalentBootcamp_Blog.Identity.Requirements;
 using iTalentBootcamp_Blog.Identity.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -22,11 +24,17 @@ builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.
 builder.Services.AddIdentityWithOpt(builder.Configuration);//StartupExtension
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IClaimsTransformation, UserClaimProviders>();
+builder.Services.AddScoped<IAuthorizationHandler, ExchangeExpireRequirementHandler>();
 builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("GiresunPolicy", policy =>
     {
         policy.RequireClaim("city","Giresun");//(Claim-based Authorization) Herhangi bir business yok sadece varlığı kontrol ediliyor.
+    });
+
+    opt.AddPolicy("ExchangePolicy", policy =>
+    {
+        policy.AddRequirements(new ExchangeExpireRequirement());
     });
 });
 builder.Services.ConfigureApplicationCookie(opt =>
