@@ -21,7 +21,7 @@ namespace iTalentBootcamp_Blog.Identity.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
-        [Authorize(Roles = "admin,role-action")]
+        [Authorize(Roles = "admin,role-action",Policy = "GiresunPolicy")]
         public IActionResult Index()
         {
             return View();

@@ -1,7 +1,9 @@
+using iTalentBootcamp_Blog.Identity.ClaimProviders;
 using iTalentBootcamp_Blog.Identity.Configurations;
 using iTalentBootcamp_Blog.Identity.Extensions;
 using iTalentBootcamp_Blog.Identity.Repository;
 using iTalentBootcamp_Blog.Identity.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -19,13 +21,20 @@ builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.
 
 builder.Services.AddIdentityWithOpt(builder.Configuration);//StartupExtension
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IClaimsTransformation, UserClaimProviders>();
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("GiresunPolicy", policy =>
+    {
+        policy.RequireClaim("city","Giresun");
+    });
+});
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     var cookieBuilder = new CookieBuilder();
 
     cookieBuilder.Name = "AuthCookie";
     opt.Cookie = cookieBuilder;
-
     opt.LoginPath = new PathString("/Auth/SignIn");
     opt.LogoutPath = new PathString("/Member/SignOut");
     opt.AccessDeniedPath = new PathString("/Member/AccessDenied");
