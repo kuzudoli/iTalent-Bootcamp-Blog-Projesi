@@ -89,10 +89,8 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
                 ModelState.AddModelIdentityError(new List<string>() { "Email veya Şifre yanlış, lütfen bilgilerinizi kontrol ediniz." });
                 return View();
             }
-            var result = await _signInManager.PasswordSignInAsync(hasUser, request.Password, request.RememberMe, true);
 
-            if (result.Succeeded)
-                return Redirect(returnUrl);
+            var result = await _signInManager.PasswordSignInAsync(hasUser, request.Password, request.RememberMe, true);
 
             if (result.IsLockedOut)
             {
@@ -100,16 +98,24 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
                 return View();
             }
 
-            string errStr;
-            var userAttemptCount = await _userManager.GetAccessFailedCountAsync(hasUser);
+            if (!result.Succeeded)
+            {
+                string errStr;
+                var userAttemptCount = await _userManager.GetAccessFailedCountAsync(hasUser);
 
-            if (userAttemptCount == _failedLoginMaxCount - 1)
-                errStr = "Email veya Şifre yanlış, lütfen bilgilerinizi kontrol ediniz. Tekrar hatalı giriş yaparsanız hesabınız geçiçi olarak kilitlenecektir.";
-            else
-                errStr = "Email veya Şifre yanlış, lütfen bilgilerinizi kontrol ediniz.";
+                if (userAttemptCount == _failedLoginMaxCount - 1)
+                    errStr = "Email veya Şifre yanlış, lütfen bilgilerinizi kontrol ediniz. Tekrar hatalı giriş yaparsanız hesabınız geçiçi olarak kilitlenecektir.";
+                else
+                    errStr = "Email veya Şifre yanlış, lütfen bilgilerinizi kontrol ediniz.";
 
-            ModelState.AddModelIdentityError(new List<string>() { errStr });
-            return View();
+                ModelState.AddModelIdentityError(new List<string>() { errStr });
+                return View();
+            }
+
+            if (hasUser.BirthDay.HasValue)
+                await _signInManager.SignInWithClaimsAsync(hasUser, request.RememberMe, new[] { new Claim("birthday", hasUser.BirthDay.Value.ToString()!) });
+            
+            return Redirect(returnUrl);
         }
 
         public IActionResult ForgotPassword()

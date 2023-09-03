@@ -24,6 +24,7 @@ namespace iTalentBootcamp_Blog.Identity.Areas.Admin.Controllers
         [Authorize(Roles = "admin,role-action",Policy = "GiresunPolicy")]
         public IActionResult Index()
         {
+            var claims = User.Claims.ToList();
             return View();
         }
 

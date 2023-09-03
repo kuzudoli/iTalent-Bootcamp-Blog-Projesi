@@ -25,6 +25,7 @@ builder.Services.AddIdentityWithOpt(builder.Configuration);//StartupExtension
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IClaimsTransformation, UserClaimProviders>();
 builder.Services.AddScoped<IAuthorizationHandler, ExchangeExpireRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, ViolenceRequirementHandler>();
 builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("GiresunPolicy", policy =>
@@ -35,6 +36,11 @@ builder.Services.AddAuthorization(opt =>
     opt.AddPolicy("ExchangePolicy", policy =>
     {
         policy.AddRequirements(new ExchangeExpireRequirement());
+    });
+
+    opt.AddPolicy("ViolancePolicy", policy =>
+    {
+        policy.AddRequirements(new ViolenceRequirement(18));
     });
 });
 builder.Services.ConfigureApplicationCookie(opt =>

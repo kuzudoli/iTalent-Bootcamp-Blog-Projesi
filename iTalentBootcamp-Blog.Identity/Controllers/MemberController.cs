@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.FileProviders;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace iTalentBootcamp_Blog.Identity.Controllers
 {
@@ -142,7 +144,11 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
             }
             await _userManager.UpdateSecurityStampAsync(user);
             await _signInManager.SignOutAsync();
-            await _signInManager.SignInAsync(user, true);
+
+            if (user.BirthDay.HasValue)
+                await _signInManager.SignInWithClaimsAsync(user, true, new[] { new Claim("birthday", user.BirthDay.Value.ToString()!) });
+            else
+                await _signInManager.SignInAsync(user, true);
 
             TempData["SuccessMessage"] = "Profiliniz başarıyla güncellendi.";
 
@@ -161,6 +167,13 @@ namespace iTalentBootcamp_Blog.Identity.Controllers
         [Authorize(Roles ="admin", Policy = "ExchangePolicy")]
         [HttpGet]
         public IActionResult Exchange()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "admin", Policy = "ViolancePolicy")]
+        [HttpGet]
+        public IActionResult ViolanceContent()
         {
             return View();
         }
