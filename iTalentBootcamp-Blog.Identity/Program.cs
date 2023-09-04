@@ -1,11 +1,14 @@
 using iTalentBootcamp_Blog.Identity.ClaimProviders;
 using iTalentBootcamp_Blog.Identity.Configurations;
+using iTalentBootcamp_Blog.Identity.Entity;
 using iTalentBootcamp_Blog.Identity.Extensions;
 using iTalentBootcamp_Blog.Identity.Repository;
 using iTalentBootcamp_Blog.Identity.Requirements;
+using iTalentBootcamp_Blog.Identity.Seeds;
 using iTalentBootcamp_Blog.Identity.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -56,6 +59,14 @@ builder.Services.ConfigureApplicationCookie(opt =>
     opt.SlidingExpiration = true;//Expire süresi katlanır
 });
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    //Seed yapısı bir kez çalışacağı için using bloğu ile kullanıldı.
+    //İş bittiğinde instance alınan servis memoryden düşer
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+    await PermissionSeed.SeedAsync(roleManager);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
