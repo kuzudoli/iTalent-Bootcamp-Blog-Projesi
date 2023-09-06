@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Authorization
+
+@inject IAuthorizationService authorizationService
+
+<h1>Order sayfası</h1>
+
+@if (authorizationService.AuthorizeAsync(User, "OrderPermissionReadAndDelete").Result.Succeeded)
+{
+    <h3>Order Read Permission</h3>
+    <h3>Order Update Permission</h3>
+    <h3>Order Delete Permission</h3>
+}

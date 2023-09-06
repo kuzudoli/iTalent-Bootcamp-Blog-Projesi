@@ -2,6 +2,7 @@ using iTalentBootcamp_Blog.Identity.ClaimProviders;
 using iTalentBootcamp_Blog.Identity.Configurations;
 using iTalentBootcamp_Blog.Identity.Entity;
 using iTalentBootcamp_Blog.Identity.Extensions;
+using iTalentBootcamp_Blog.Identity.Permission;
 using iTalentBootcamp_Blog.Identity.Repository;
 using iTalentBootcamp_Blog.Identity.Requirements;
 using iTalentBootcamp_Blog.Identity.Seeds;
@@ -44,6 +45,13 @@ builder.Services.AddAuthorization(opt =>
     opt.AddPolicy("ViolancePolicy", policy =>
     {
         policy.AddRequirements(new ViolenceRequirement(18));
+    });
+
+    opt.AddPolicy("OrderPermissionReadAndDelete", policy =>
+    {
+        policy.RequireClaim("permission", Permissions.Order.Read);//ikisinden birisi olmak zorunda
+        policy.RequireClaim("permission", Permissions.Order.Update);//ikisinden birisi olmak zorunda
+        policy.RequireClaim("permission", Permissions.Order.Delete);//bu zorunlu
     });
 });
 builder.Services.ConfigureApplicationCookie(opt =>
